@@ -1,0 +1,75 @@
+local Player = game.Players.LocalPlayer
+local Mouse = Player:GetMouse()
+local UserInputService = game:GetService("UserInputService")
+local HoldingH = false
+local ForceInstance = Instance.new("BodyPosition")
+ForceInstance.D = 0
+ForceInstance.P = math.huge
+ForceInstance.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+
+
+function GetNearest()
+	local nearest = math.huge
+	local nearestpart 
+	for i,v in pairs(game.Players:GetChildren()) do
+		if v~=Player and v.Character and Player.Character then
+			if (Player.Character.HumanoidRootPart.Position - v.Character.HumanoidRootPart.Position).magnitude < nearest then
+				nearest = (Player.Character.HumanoidRootPart.Position - v.Character.HumanoidRootPart.Position).magnitude
+				nearest = v
+			end
+		end
+	end
+	print(v)
+	return v
+end
+
+function PartOfPlayer(part)
+	for i, v in pairs(game.Players:GetChildren()) do
+		if v.Character then
+			if part:IsDescendantOf(v.Character) then
+				return true
+			end
+		end
+	end
+	return false
+end
+
+function Test()
+	local nearestplayer = GetNearest()
+	local tab = {}
+	if nearestplayer then
+		print(nearestplayer)
+		for i,v in pairs(game.Workspace:GetDescendants()) do
+			if v:IsA("BasePart") and not v.Anchored and not PartOfPlayer(v) then
+				if v:FindFirstChildWhichIsA("BodyMover",true) then
+					v:FindFirstChildWhichIsA("BodyMover",true):Destroy()
+				end
+				local force = ForceInstance:Clone()
+				force.Parent = v
+				table.insert(tab,force)
+			end
+		end
+	end
+	repeat wait() 
+		for i,v in pairs(tab) do
+			v.Position = Mouse.Hit.p
+		end
+	until not HoldingH
+end
+
+function onInputBegan(input,gameProcessed)
+	if input.UserInputType == Enum.KeyCode.H then
+		HoldingH = true
+		print("Pressed")
+		Test()
+	end
+end
+
+function onInputEnded(input,gameProcessed)
+	if input.UserInputType == Enum.KeyCode.H then
+		HoldingH = false
+	end
+end
+
+UserInputService.InputBegan:connect(onInputBegan)
+UserInputService.InputEnded:connect(onInputEnded)
