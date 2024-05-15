@@ -1,0 +1,752 @@
+local Mobs = game.Workspace.Mobs
+local players = game.Players
+local Drops = workspace.Drops
+local Player = game.Players.LocalPlayer
+local Mouse = Player:GetMouse()
+local library = loadstring(game:HttpGet(('https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wall%20v3')))()
+local Window = library:CreateWindow("Swordburst 3 HAX") -- Creates the window
+local Main = Window:CreateFolder("Main")
+local running = false
+local kwait = 0.25
+local vim = game.VirtualInputManager
+local krange = 50
+local includeplayers = false
+local addgoodplayers = false
+local mousetarget = false
+local nearesttoplayer = false
+local auravisual = false
+local db = false
+local Characters = workspace.Characters
+local part,player
+local killauraonattack = false
+local MobPortalsV = false
+local touched = false
+local MPs = workspace.MobPortals
+local skillspam = false
+local grav = workspace.Gravity
+local tweenservice = game:GetService("TweenService")
+local HighlightDrops = false
+local gnearestenemies = {}
+local infinitestamina = false
+local AutoVoidTower = false
+local Spoofmount = false
+local tpspeed = 180
+local BV = Instance.new('BodyVelocity')
+local autopcikupitems = false
+local spammine = false
+local autocomplete = false
+local questg = Player.PlayerGui:WaitForChild("Quest"):WaitForChild("Frame"):WaitForChild("Quest")
+local profile = require(game.ReplicatedStorage.Systems.Profile)
+local quests = require(game:GetService("ReplicatedStorage").Systems.Quests)
+local questlist = require(game:GetService("ReplicatedStorage").Systems.Quests.QuestList)
+BV.velocity = Vector3.new(0, 0, 0)
+BV.maxForce = Vector3.new(9e9, 9e9, 9e9)
+Main:Toggle("Kill Aura",function(bool)
+	running =bool
+	if running then
+		spawn(function()
+			RunScript()
+		end)
+	end
+end)
+Main:Toggle("Spam Skill DMG on HIT",function(bool)
+	skillspam = bool
+end)
+Main:Toggle("Kill Aura On Attack Only",function(bool)
+	killauraonattack = bool
+end)
+Main:Slider("Kill Aura Wait Time",{min=0.01,max=0.25,precise = true},function(value)
+	kwait = value
+end)
+Main:Slider("Kill Aura Range",{min=1,max=50,precise = false},function(value)
+	krange = value
+end)
+
+Main:Toggle("Include Players",function(bool)
+	includeplayers = bool
+end)
+
+Main:Toggle("Include Good Players",function(bool)
+	addgoodplayers = bool
+end)
+
+--[[
+Main:Toggle("Kill Aura Visual",function(bool)
+	auravisual = bool
+end)
+Main:Toggle("Spoof Mount",function(bool)
+	Spoofmount = bool
+end)
+
+Main:Toggle("Mouse Target",function(bool)
+	mousetarget = bool
+end)
+
+Main:Toggle("Nearest to Player (Mobs Only)",function(bool)
+	nearesttoplayer = bool
+end)]]
+
+Main:Toggle("Infinite Stamina",function(bool)
+	infinitestamina = bool
+end)
+
+Main:Toggle("Auto Pickup Items",function(bool)
+	autopcikupitems = bool
+end)
+
+Main:Toggle("Auto Repeat Quest",function(bool)
+	autocomplete = bool
+	if questg.CenterPanel.Claim.Visible and autocomplete then
+		firesignal(questg.CenterPanel.Claim.MouseButton1Click)
+	end
+	if questg.CenterPanel.Repeat.Visible and autocomplete then
+		firesignal(questg.CenterPanel.Repeat.Accept.MouseButton1Click)
+	end
+end)
+
+Main:Toggle("Highlight Drops",function(bool)
+	HighlightDrops = bool
+	if bool then
+		RunItemESP()
+	else
+		for i,v in pairs(Drops:GetChildren()) do
+			local esp = v:FindFirstChild("EPPortal",true)
+			if esp then
+				esp.Enabled = false
+				esp.EPBox.Transparency = 1
+			end
+		end
+	end
+end)
+Main:Toggle("Mob Portals",function(bool)
+	MobPortalsV = bool
+	if MobPortalsV then
+		for i,v in pairs(MPs:GetChildren()) do
+			if not v.Portal:FindFirstChild("EPPortal") then
+				CreateESP(v.Portal)
+			else
+				v.Portal.EPPortal.Enabled = true
+				v.Portal.EPPortal.EPBox.Transparency = 0.75
+			end
+		end
+	else
+		for i,v in pairs(MPs:GetChildren()) do
+			if v.Portal:FindFirstChild("EPPortal") then
+				v.Portal.EPPortal.Enabled = false
+				v.Portal.EPPortal.EPBox.Transparency = 1
+			end
+		end
+	end
+end)
+Main:Toggle("Spam Mine Action On Touch",function(bool)
+	spammine = bool
+end)
+
+Main:Slider("Mount Speed",{min=5,max=100,precise = false},function(value)
+	local speed = game:GetService("ReplicatedStorage").Profiles[Player.Name].Equipped.Mount:FindFirstChild("Speed",true)
+	if speed then
+		speed.Value = value
+	end
+end)
+Main:Toggle("Auto Void Tower",function(bool)
+	AutoVoidTower = bool
+	if bool then
+		if workspace:FindFirstChild("TowerDungeon") then
+			--workspace.Gravity = 0
+			BV.Parent = Player.Character.HumanoidRootPart
+			RunVoidTower()
+		end
+	else
+		--workspace.Gravity = grav
+		Player.Character.Humanoid.Health = 0
+	end
+end)
+--[[
+Main:Slider("Teleport Speed",{min=100,max=180,precise = false},function(value)
+	tpspeed = value
+end)]]
+function Teleport(cf,anchor,enemy)
+	local cframe 
+	--AddBMs()
+	if Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
+		if Player.Character.HumanoidRootPart.Anchored then
+			Player.Character.HumanoidRootPart.Anchored = false
+		end
+		if typeof(cf) == "CFrame" then
+			cframe = cf
+		elseif typeof(cf) == "Instance" and cf:IsA("BasePart") then
+			cframe = cf.CFrame
+		else
+			return
+		end
+		local distance = (Player.Character.HumanoidRootPart.CFrame.Position - cf.Position).Magnitude
+		local tweeninfo = TweenInfo.new(distance/tpspeed,Enum.EasingStyle.Linear)
+		local teleport = tweenservice:Create(Player.Character.HumanoidRootPart,tweeninfo,{CFrame = cframe})
+		teleport:Play()
+		teleport.Completed:wait()
+		if anchor then
+			Player.Character.HumanoidRootPart.Anchored = true
+		end
+	end
+end
+
+function FindEnemy()
+	if not Player.Character then
+		return
+	elseif not Player.Character:FindFirstChild("HumanoidRootPart") then
+		return
+	end
+	local nearest
+	local nearestdis = math.huge
+	for i,v in pairs(Mobs:GetChildren()) do
+		if v:GetAttribute("HP") > 0 and v:FindFirstChild("HumanoidRootPart") and v.PrimaryPart and (v.HumanoidRootPart.Position - Player.Character.HumanoidRootPart.Position).magnitude < nearestdis then
+			nearestdis =  (v.HumanoidRootPart.Position - Player.Character.HumanoidRootPart.Position).magnitude
+			nearest = v.PrimaryPart
+		end
+	end
+	return nearest
+end
+
+function DungeonComplete()
+	if workspace.TowerDungeon:FindFirstChild("DungeonBoss",true) then
+		if workspace.TowerDungeon["1"].Door.Left.Door.Rotation ~= Vector3.new(0,0,0) and not game:GetService("Players").LocalPlayer.PlayerGui.VoidTowerHUD.Frame.BossTimer.Visible then
+			Teleport(workspace.TowerDungeon.StaircaseRoom.Portal)
+			repeat wait() until #Mobs:GetChildren() > 0
+		end
+	else
+		local max = #workspace.TowerDungeon:GetChildren()
+		if #workspace.TowerDungeon:GetChildren() > 0 then
+			max = #workspace.TowerDungeon:GetChildren()-2
+			if workspace.TowerDungeon:GetChildren()[max].Door.Left.Door.Rotation ~= Vector3.new(0,0,0) and #Mobs:GetChildren() < 1 then
+				Teleport(workspace.TowerDungeon.StaircaseRoom.Portal)
+				repeat wait() until #Mobs:GetChildren() > 0
+			end
+		end
+	end
+end
+
+
+function CreateESP(v,bool)
+	local bb = Instance.new("BillboardGui",v) 
+	bb.Name = "EPPortal"
+	bb.Adornee = v
+	bb.ExtentsOffset = Vector3.new(0, 1, 0)
+	bb.AlwaysOnTop = true
+	bb.Size = UDim2.new(0, 5, 0, 5)
+	bb.StudsOffset = Vector3.new(0, 3, 0)
+	local frame = Instance.new("Frame", bb)
+	frame.ZIndex = 10
+	frame.BackgroundTransparency = 1
+	frame.Size = UDim2.new(1, 0, 1, 0)
+	local TxtName = Instance.new("TextLabel", frame)
+	TxtName.Name = "Names"
+	TxtName.ZIndex = 10
+	--TxtName.Text = Obj.Name
+	TxtName.BackgroundTransparency = 1
+	TxtName.Text = "Mob Portal"
+	if bool then
+		TxtName.Text = v.Parent.Name
+	end
+	TxtName.Position = UDim2.new(0, 0, 0, -10)
+	TxtName.Size = UDim2.new(1, 0, 10, 0)
+	TxtName.Font = "SourceSansBold"
+	TxtName.TextSize = 25
+	TxtName.TextStrokeTransparency = 0.5
+	local PickColor = Color3.new(1, 1, 1)
+	TxtName.TextColor3 = PickColor
+	local Box = Instance.new("BoxHandleAdornment",bb)
+	local cframe,size = v.Parent:GetBoundingBox()
+	Box.Name = "EPBox"
+	Box.Adornee = v
+	Box.AlwaysOnTop = true
+	Box.ZIndex = 5
+	Box.Transparency = 0.75
+	Box.Color3 = Color3.new(255,255,255)
+	Box.Transparency = 0.75
+	Box.Size = size
+end
+
+function UseSkills()
+	local scythe = game:GetService("Players").LocalPlayer.PlayerGui.SkillBar:FindFirstChild("ScytheThrow",true)
+	local slash = game:GetService("Players").LocalPlayer.PlayerGui.SkillBar:FindFirstChild("WideSlash",true)
+	if scythe then
+		local let = scythe.Hotkey.Text
+		vim:SendKeyEvent(true, let, false,game)
+		vim:SendKeyEvent(false,let, false,game)
+	end
+	if slash then
+		local let = slash.Hotkey.Text
+		vim:SendKeyEvent(true, let, false,game)
+		vim:SendKeyEvent(false,let, false,game)
+	end
+end
+
+
+
+function CreateItemESP(v)
+	local bb = Instance.new("BillboardGui",v) 
+	bb.Name = "EPPortal"
+	bb.Adornee = v
+	bb.ExtentsOffset = Vector3.new(0, 1, 0)
+	bb.AlwaysOnTop = true
+	bb.Size = UDim2.new(0, 5, 0, 5)
+	local frame = Instance.new("Frame", bb)
+	frame.ZIndex = 10
+	frame.BackgroundTransparency = 1
+	frame.Size = UDim2.new(1, 0, 1, 0)
+	local TxtName = Instance.new("TextLabel", frame)
+	TxtName.Name = "Names"
+	TxtName.ZIndex = 10
+	--TxtName.Text = Obj.Name
+	TxtName.BackgroundTransparency = 1
+	TxtName.Text = "Mob Portal"
+	TxtName.Text = v.Parent.Name
+	TxtName.Size = UDim2.new(1, 0, 10, 0)
+	TxtName.Font = "SourceSansBold"
+	TxtName.TextSize = 25
+	TxtName.TextStrokeTransparency = 0.5
+	local PickColor = Color3.new(1, 0.839216, 0.0313725)
+	TxtName.TextColor3 = PickColor
+	local Box = Instance.new("BoxHandleAdornment",bb)
+	local cframe,size = v.Parent:GetBoundingBox()
+	Box.Name = "EPBox"
+	Box.Adornee = v
+	Box.AlwaysOnTop = true
+	Box.ZIndex = 5
+	Box.Transparency = 0.75
+	Box.Color3 = Color3.new(255,255,255)
+	Box.Transparency = 0.75
+	Box.Size = size
+	Box.Color3 = Color3.new(1, 0.839216, 0.0313725)
+end
+
+function RunScript()
+	while game["Run Service"].Stepped:wait() and running do
+		if mousetarget then
+			part,player = GetNearestPlayerToMouse()
+		else
+			gnearestenemies = GetNearestEnemies()
+			for i,v in pairs(gnearestenemies) do
+				local esp = v:FindFirstChild("EPPortal",true)
+				if esp and v:GetAttribute("HP")<1 then
+					esp.Enabled = false
+					esp.EPBox.Transparency = 1
+				elseif esp and v:GetAttribute("HP") > 1 then
+					esp.Enabled =true
+					esp.EPBox.Transparency = 0.75
+				elseif v:GetAttribute("HP") > 1 then
+					CreateESP(v.HumanoidRootPart,true)
+				end
+			end
+			if #gnearestenemies > 0 and not killauraonattack and not db then
+				game.ReplicatedStorage.Systems.Combat.PlayerAttack:FireServer(gnearestenemies)
+				db = true
+				spawn(function()
+					wait(kwait+0.1)
+					db = false
+				end)
+			end
+		end
+	end
+end
+
+function RunVoidTower()
+	autopcikupitems = true
+	skillspam = true
+	for i,v in pairs(workspace.TowerDungeon:GetDescendants()) do
+		if v.Name:find("DungeonTile") then
+			v:Destroy()
+		end
+	end
+	spawn(function()
+	repeat wait()
+		local Enemy = FindEnemy()
+		if Enemy then
+			Teleport(FindEnemy().CFrame *CFrame.new(0,-30,0),true,Enemy.Parent)
+			repeat wait()
+				if Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") and (Player.Character.HumanoidRootPart.Position - Enemy.Position).magnitude > 70 then
+					Teleport(FindEnemy().CFrame *CFrame.new(0,-30,0),true,Enemy.Parent)
+				end
+				gnearestenemies = GetNearestEnemies()
+				if #gnearestenemies > 0 and not db then
+					game.ReplicatedStorage.Systems.Combat.PlayerAttack:FireServer(gnearestenemies)
+					db = true
+					spawn(function()
+						wait(0.21)
+						db = false
+					end)
+				end
+				Player.Character.HumanoidRootPart.CFrame = CFrame.new(Player.Character.HumanoidRootPart.Position,Enemy.Position)
+				UseSkills()
+			until Enemy.Parent:GetAttribute("HP") < 1 
+		else
+			if not workspace.TowerDungeon:FindFirstChild("MobSpawn",true) then
+				Teleport(workspace.TowerDungeon.StaircaseRoom.Portal)
+				repeat wait() until workspace.TowerDungeon:FindFirstChild("MobSpawn",true)
+			end
+		end
+		--DungeonComplete()
+	until not AutoVoidTower
+	end)
+end
+
+function RunItemESP()
+	for i,v in pairs(game:GetService("ReplicatedStorage").Drops:GetChildren()) do
+		if v:GetAttribute("Owner") and v:GetAttribute("Owner") == Player.Name and not v:GetAttribute("Price") then
+			for a,b in pairs(Drops:GetChildren()) do
+				if (b.PrimaryPart.Position - v:GetAttribute("CFrame").Position).magnitude <5 and v.Name == b.Name then
+					local esp = b:FindFirstChild("EPPortal",true)
+					if esp then
+						esp.Enabled = true
+						esp.EPBox.Transparency = 0.75
+					else
+						CreateItemESP(b.PrimaryPart)
+					end
+				end
+			end
+		end
+	end
+end
+
+function GetNearestEnemies()
+	local nearestenemies = {}
+	for i,v in pairs(Mobs:GetChildren()) do
+		if v:GetAttribute("HP") and v:GetAttribute("HP")>0 and v:FindFirstChild("HumanoidRootPart") and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
+			if (v.HumanoidRootPart.Position - Player.Character.HumanoidRootPart.Position).magnitude <=krange then
+				table.insert(nearestenemies,v)
+			else
+				local esp = v:FindFirstChild("EPPortal",true)
+				if esp then
+					esp.Enabled =false
+					esp.EPBox.Transparency = 1
+				end
+			end
+		elseif v:GetAttribute("HP") and v:GetAttribute("HP")<1 and v:FindFirstChild("EPPortal",true) then
+			local esp = v:FindFirstChild("EPPortal",true) 
+			esp.Enabled = false
+			esp.EPBox.Transparency = 1
+		end
+	end
+	if includeplayers then
+		for i,v in pairs(Characters:GetChildren()) do
+			if v~= Player.Character and v:GetAttribute("HP") and v:GetAttribute("HP")>0 and v:FindFirstChild("HumanoidRootPart") and v:GetAttribute("PKStatus") and ((v:GetAttribute("PKStatus") ~= "GOOD" and not addgoodplayers) or addgoodplayers) and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
+				if (v.HumanoidRootPart.Position - Player.Character.HumanoidRootPart.Position).magnitude <=krange then
+					table.insert(nearestenemies,v)
+				else
+					local esp = v:FindFirstChild("EPPortal",true)
+					if esp then
+						esp.Enabled =false
+						esp.EPBox.Transparency = 1
+					end
+				end
+			end
+		end
+	end
+	return nearestenemies
+end
+
+--[[
+function GetNearestPlayerToMouse()
+	local players = {}
+	local plrhld = {}
+	local dists = {}
+	if not npcmode then
+		for i, v in pairs(game.Players:GetPlayers()) do
+			if v~=Player then
+				table.insert(players,v)
+			end
+		end
+		for i, v in pairs(players) do
+			if v and (v.Character) ~= nil and v.Character:GetAttribute("PKStatus") and v.Character:GetAttribute("PKStatus") == "ENEMY" then
+				local head
+				head = v.Character:FindFirstChild(TargetPart,true)
+				if head and not head:IsA("BasePart") then
+					head = FindPart(TargetPart,v.Character) or v.Character.PrimaryPart
+				end
+				if head and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health > 0 then
+					local dist = (head.Position-game.Workspace.CurrentCamera.CoordinateFrame.p).magnitude
+					plrhld[v.Name..i]={}
+					plrhld[v.Name..i].dist=dist
+					plrhld[v.Name..i].plr=v
+					plrhld[v.Name..i].head=head
+					plrhld[v.Name..i].Char = v.Character
+					local ray = Ray.new(game.Workspace.CurrentCamera.CoordinateFrame.p,(Mouse.Hit.p-game.Workspace.CurrentCamera.CoordinateFrame.p).unit*dist)
+					local hit,pos = game.Workspace:FindPartOnRay(ray,game.Workspace)
+					local diff = math.floor((pos-head.Position).magnitude)
+					plrhld[v.Name..i].diff=diff
+					table.insert(dists,diff)
+				end
+			end
+		end
+	else
+		if npcinstance then
+			if GetNearestToChar then
+				local nearest = math.huge
+				local nearestpart 
+				if typeof(npcinstance) == "table" then
+					for a,b in pairs(npcinstance) do
+						for i,v in pairs(b:GetChildren()) do
+							if GetHealth(v) and v:FindFirstChild("HumanoidRootPart") and (v.HumanoidRootPart.Position - Player.Character.HumanoidRootPart.Position).magnitude<nearest then
+								nearest = (v.PrimaryPart.Position - Player.Character.PrimaryPart.Position).magnitude
+								nearestpart = v
+							end
+						end
+					end
+				else
+					for i, v in pairs(npcinstance:GetChildren()) do
+						if GetHealth(v) and v:FindFirstChild("HumanoidRootPart") and (v.HumanoidRootPart.Position - Player.Character.HumanoidRootPart.Position).magnitude<nearest then
+							nearest = (v.HumanoidRootPart.Position - Player.Character.HumanoidRootPart.Position).magnitude
+							nearestpart = v
+						end
+					end
+				end
+				if nearestpart then
+					local head = nearestpart:FindFirstChild(TargetPart,true) or nearestpart.PrimaryPart
+					if head and not head:IsA("BasePart") then
+						head = FindPart(TargetPart,nearestpart) or nearestpart.PrimaryPart
+					end
+					if head then
+						return head, {DisplayName = nearestpart.Name, Character =nearestpart, TeamColor = BrickColor.new("White")}
+					else
+						return
+					end
+				else
+					return
+				end
+			end
+			if typeof(npcinstance) == "table" then
+				for a,b in pairs(npcinstance) do
+					for i, v in pairs(b:GetChildren()) do
+						if GetHealth(v) then
+							local head
+							head = v:FindFirstChild(TargetPart,true)
+							if not head:IsA("BasePart") then
+								head = FindPart(TargetPart,v) or v.PrimaryPart
+							end
+							if head and GetHealth(v) then
+								local dist = (head.Position-game.Workspace.CurrentCamera.CoordinateFrame.p).magnitude
+								plrhld[v.Name..i]={}
+								plrhld[v.Name..i].dist=dist
+								plrhld[v.Name..i].plr={DisplayName = v.Name, Character =v, TeamColor = BrickColor.new("White")}
+								plrhld[v.Name..i].head=head
+								local ray = Ray.new(game.Workspace.CurrentCamera.CoordinateFrame.p,(Mouse.Hit.p-game.Workspace.CurrentCamera.CoordinateFrame.p).unit*dist)
+								local hit,pos = game.Workspace:FindPartOnRay(ray,game.Workspace)
+								local diff = math.floor((pos-head.Position).magnitude)
+								plrhld[v.Name..i].diff=diff
+								table.insert(dists,diff)
+							end
+						end
+					end
+				end
+			else
+				for i, v in pairs(npcinstance:GetChildren()) do
+					if GetHealth(v) then
+						local head
+						head = v:FindFirstChild(TargetPart,true)
+						if head and not head:IsA("BasePart") then
+							head = FindPart(TargetPart,v) or v.PrimaryPart
+						end
+						if head and GetHealth(v) then
+							local dist = (head.Position-game.Workspace.CurrentCamera.CoordinateFrame.p).magnitude
+							plrhld[v.Name..i]={}
+							plrhld[v.Name..i].dist=dist
+							plrhld[v.Name..i].plr={DisplayName = v.Name, Character =v, TeamColor = BrickColor.new("White")}
+							plrhld[v.Name..i].head=head
+							local ray = Ray.new(game.Workspace.CurrentCamera.CoordinateFrame.p,(Mouse.Hit.p-game.Workspace.CurrentCamera.CoordinateFrame.p).unit*dist)
+							local hit,pos = game.Workspace:FindPartOnRay(ray,game.Workspace)
+							local diff = math.floor((pos-head.Position).magnitude)
+							plrhld[v.Name..i].diff=diff
+							table.insert(dists,diff)
+						end
+					end
+				end
+			end
+		else
+			return
+		end
+	end
+	if unpack(dists) == nil then
+		return 
+	end
+	local ldist = math.floor(math.min(unpack(dists)))
+	if ldist > dis then
+		return 
+	end
+	for i, v in pairs(plrhld) do
+		if v.diff==ldist then
+			return v.head,v.plr
+		end
+	end
+end
+
+]]
+
+
+MPs.ChildAdded:connect(function(v)
+	if MobPortalsV then
+		CreateESP(v:WaitForChild("Portal"))	
+	end
+end)
+
+Drops.ChildAdded:connect(function(v)
+	wait(0.25)
+	if HighlightDrops and not autopcikupitems then
+		for a,b in pairs(game:GetService("ReplicatedStorage").Drops:GetChildren()) do
+			if b:GetAttribute("Owner") and b:GetAttribute("Owner") == Player.Name and not b:GetAttribute("Price") and v.Name == b.Name then
+				if (v.PrimaryPart.Position - b:GetAttribute("CFrame").Position).magnitude < 5  then
+					CreateItemESP(v.PrimaryPart)
+				end
+			end
+		end
+	end
+end)
+game:GetService("ReplicatedStorage").Drops.ChildAdded:connect(function(v)
+	wait(0.05)
+	if v:GetAttribute("Owner") and v:GetAttribute("Owner") == Player.Name and not v:GetAttribute("Price") and autopcikupitems then
+
+		game:GetService("ReplicatedStorage").Systems.Drops.Pickup:FireServer(v)
+	end
+end)
+
+for i,v in pairs(getgc(true)) do
+	if type(v) == "function" and islclosure(v) then
+		if getinfo(v).name == "GetCharacterAim" then
+			hf = hookfunction(v,function(...)
+				if running and killauraonattack and not db then
+					db = true
+					--for a,b in pairs(gnearestenemies) do
+					game.ReplicatedStorage.Systems.Combat.PlayerAttack:FireServer(gnearestenemies)
+					--end
+					spawn(function()
+						wait(0.25)
+						db = false
+					end)
+				end
+				return hf(...)
+			end)
+		elseif getinfo(v).name == "UseStamina" then
+			sf = hookfunction(v,function(...)
+				if infinitestamina then
+					return
+				end
+				return sf(...)
+			end)
+
+		end
+	end
+end
+
+--[[
+oldNamecall = hookmetamethod(game, "__namecall", newcclosure(function(...)
+	args = {...}
+	local self = args[1]
+	if getnamecallmethod() == "FireServer" then
+		if self.Name == "Mine" and spammine then
+			for i=1,15 do
+				oldNamecall(...)
+			end
+			return
+		end
+	end
+	return oldNamecall(...)
+end))
+]]
+
+
+for i,v in pairs(getgc(true)) do
+	if type(v) == "function" and islclosure(v) then
+		if getinfo(v).name == "PlayerSkillAttack" then
+			of = hookfunction(v,function(...)
+				args = {...}
+				if #gnearestenemies > 1 then
+					args[3] = gnearestenemies
+				end
+				if skillspam then
+					for i=1,20 do
+						args[5] = i
+						of(unpack(args))
+					end
+				end
+				return of(...)
+			end)
+		end
+	end
+end
+
+questg.CenterPanel.Claim.Changed:connect(function()
+	if questg.CenterPanel.Claim.Visible and autocomplete then
+		firesignal(questg.CenterPanel.Claim.MouseButton1Click)
+	end
+end)
+
+questg.CenterPanel.Repeat.Changed:connect(function()
+	if questg.CenterPanel.Repeat.Visible and autocomplete then
+		firesignal(questg.CenterPanel.Repeat.Accept.MouseButton1Click)
+	end
+end)
+
+Player.Character:WaitForChild("UpperTorso").Touched:connect(function(v)
+	if v:IsDescendantOf(workspace.Ores) then
+		if spammine and not touched then
+			touched = true
+			for i=1,10 do
+				game:GetService("ReplicatedStorage").Systems.Mining.Mine:FireServer()
+				wait(0.035)
+			end
+			touched = false
+		end
+	end
+end)
+Player.CharacterAdded:Connect(function(c)
+	c:WaitForChild("UpperTorso").Touched:connect(function(v)
+		if v:IsDescendantOf(workspace.Ores) then
+			if spammine and not touched then
+				touched = true
+				for i=1,10 do
+					game:GetService("ReplicatedStorage").Systems.Mining.Mine:FireServer()
+					wait(0.035)
+				end
+				touched = false
+			end
+		end
+	end)
+end)
+workspace.TowerDungeon.DescendantAdded:Connect(function(v)
+	if AutoVoidTower then
+		if v.Name:find("DungeonTile") or v:FindFirstAncestor("DungeonBoss") then
+			wait()
+			v:Destroy()
+		end
+	end
+	if v.Name == "MobSpawn" then
+		v.Changed:connect(function()
+			if v.Transparency == 1 then
+				v:Destroy()
+			end
+		end)
+	end
+end)
+
+for i,v in pairs(workspace.TowerDungeon:GetDescendants()) do
+	if v.Name == "MobSpawn" then
+		if v.Transparency == 1 then
+			v:Destroy()
+		else
+			v.Changed:connect(function()
+				if v.Transparency == 1 then
+					v:Destroy()
+				end
+			end)
+		end
+	end
+end
+--[[
+for i,v in pairs(getgc(true)) do
+	if type(v) == "function" and islclosure(v) then
+		if getinfo(v).name == "IsMounted" then
+			mo = hookfunction(v,function(...)
+				return false
+			end)
+		end
+	end
+end]]
