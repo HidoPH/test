@@ -11388,7 +11388,7 @@ addcmd('fling',{},function(args, speaker)
 	local bambam = Instance.new("BodyAngularVelocity")
 	bambam.Name = randomString()
 	bambam.Parent = getRoot(speaker.Character)
-	bambam.AngularVelocity = Vector3.new(0,99999,0)
+	bambam.AngularVelocity = Vector3.new(0,999999999999999,0)
 	bambam.MaxTorque = Vector3.new(0,math.huge,0)
 	bambam.P = math.huge
 	local Char = speaker.Character:GetChildren()
