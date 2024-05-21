@@ -12128,15 +12128,20 @@ addcmd('tpunanchored',{'tpua'},function(args, speaker)
 			for _,part in pairs(workspace:GetDescendants()) do
 				if Players[v].Character:FindFirstChild('Head') and part:IsA("BasePart" or "UnionOperation" or "Model") and part.Anchored == false and not part:IsDescendantOf(speaker.Character) and part.Name == "Torso" == false and part.Name == "Head" == false and part.Name == "Right Arm" == false and part.Name == "Left Arm" == false and part.Name == "Right Leg" == false and part.Name == "Left Leg" == false and part.Name == "HumanoidRootPart" == false then
 					for i,c in pairs(part:GetChildren()) do
-						if c:IsA("BodyPosition") or c:IsA("BodyGyro") then
+						if c:IsA("BodyMover") and not c:IsA("BodyPosition") then
 							c:Destroy()
 						end
 					end
-					local ForceInstance = Instance.new("BodyPosition")
-					ForceInstance.Parent = part
-					ForceInstance.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
-					ForceInstance.D = 0
-					ForceInstance.P = 1000000
+					local ForceInstance
+					if not part:FindFirstChild("BodyPosition") then
+						ForceInstance = Instance.new("BodyPosition")
+						ForceInstance.Parent = part
+						ForceInstance.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+						ForceInstance.D = 0
+						ForceInstance.P = 1000000
+					else
+						ForceInstance = part:FindFirstChild("BodyPosition")
+					end
 					table.insert(Forces, ForceInstance)
 					if not table.find(frozenParts,part) then
 						table.insert(frozenParts,part)
