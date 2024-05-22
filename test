@@ -30,7 +30,7 @@ local gnearestenemies = {}
 local infinitestamina = false
 local AutoVoidTower = false
 local Spoofmount = false
-local tpspeed = 140
+local tpspeed = 100
 local BV = Instance.new('BodyVelocity')
 local autopcikupitems = false
 local spammine = false
@@ -750,4 +750,4 @@ for i,v in pairs(getgc(true)) do
 		end
 	end
 end]]
-print("V 3.01")
+print("V 3.02")
