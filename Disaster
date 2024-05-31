@@ -51,7 +51,7 @@ Player.Character.DescendantAdded:connect(function(v)
 	end
 end)
 Player.Character:WaitForChild("Humanoid",10).StateChanged:connect(function(_oldState, newState)
-	if newState == Enum.HumanoidStateType.Seated and not c.Humanoid.SeatPart then
+	if newState == Enum.HumanoidStateType.Seated and not Player.Character.Humanoid.SeatPart then
 		Player.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Running)
 	end
 end)
@@ -81,4 +81,4 @@ UserInputService.InputBegan:connect(function(input,gameProcessed)
 		damagerremote:FireServer(25)
 	end
 end)
-print("RUNNING")
+print("V 1.02")
