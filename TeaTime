@@ -1,3 +1,4 @@
+print("Fixed AddToPlate")
 local Consumables = workspace.Consumables
 local Player = game.Players.LocalPlayer
 local Plates = game:GetService("ReplicatedStorage").Assets.Plates
@@ -167,9 +168,9 @@ function GetFood()
 	else
 		Name = RFood.Name
 	end
-	game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.7.0"].knit.Services.ForkService.RF.AddToPlate:InvokeServer(Name)
+	game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.7.0"].knit.Services.IngredientService.RF.AddToPlate:InvokeServer(Name)
 end
-print("v 1.0.3.1")
+
 FillPlates()
 
 --[[
