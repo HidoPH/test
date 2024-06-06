@@ -1,4 +1,4 @@
-print("Fixed Tool Size")
+print("LOL")
 local Consumables = workspace.Consumables
 local Player = game.Players.LocalPlayer
 local Plates = game:GetService("ReplicatedStorage").Assets.Plates
@@ -283,7 +283,11 @@ function GetFood(handle)
 	game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.7.0"].knit.Services.IngredientService.RF.AddToPlate:InvokeServer(Name)
 end
 
-PlaceDownPlates()
+repeat wait()
+	GetPlate(10)
+	FillPlates()
+	PlaceDownPlates()
+until nil
 
 --[[
 repeat wait()
