@@ -1,0 +1,203 @@
+local Consumables = workspace.Consumables
+local Player = game.Players.LocalPlayer
+local Plates = game:GetService("ReplicatedStorage").Assets.Plates
+
+function GetTablePlate()
+	local Seat = GetSeat()
+	local Plate
+	if Seat then
+		Plate = Seat:FindFirstChild("Plate")
+	end
+	return Plate
+end
+
+function GetSeat()
+	local Seat
+	if Player.Character and Player.Character:FindFirstChild("Humanoid") and Player.Character.Humanoid.Sit and Player.Character.Humanoid.SeatPart then
+		Seat = Player.Character.Humanoid.SeatPart
+	end
+	return Seat
+end
+
+function GetTable()
+	local Seat = GetSeat()
+	local Table
+	if Seat then
+		Table = Seat:FindFirstAncestor("Table")
+	end
+	return Table
+end
+
+function GetNumberAttributes(c)
+	local c = 0
+	for i,v in pairs(c:GetAttributes()) do
+		c = c+1
+	end
+	return c
+end
+
+function GetAttributeFromNumber(c,n)
+	local c = 0
+	for i,v in pairs(c:GetAttributes()) do
+		c = c+1
+		if c == n then
+			return v
+		end
+	end
+end
+
+function Compare(o,t)
+	if o == "Common" then
+		if t~="Common" then
+			return true
+		end
+	elseif o == "Uncommon" then
+		if t == "Rare" then
+			return true
+		elseif t == "Legendary" then
+			return true
+		elseif t == "Mythic" then
+			return true
+		end
+	elseif o == "Rare" then
+		if t == "Legendary" then
+			return true
+		elseif t == "Mythic" then
+			return true
+		end
+	elseif o == "Legendary" then
+		if t == "Mythic" then
+			return true
+		end
+	end
+	return false
+end
+
+function GetNumberOfSpots(handle)
+	local count = 0
+	for i,v in pairs(handle:GetChildren()) do
+		if tonumber(v.Name) then
+			count =count +1
+		end
+	end
+	return count
+end
+function CheckIfAllFilled(handle)
+	for i,v in pairs(handle:GetChildren()) do
+		if tonumber(v.Name) and (not v:GetAttribute("Occupied") or (v:GetAttribute("Occupied") and v:GetAttribute("Occupied") == false)) then
+			return false
+		end
+	end
+	return true
+end
+
+function GrabFood(handle)
+	for i=1,#GetNumberOfSpots(handle) do
+		local spot = handle[tostring(i)]
+		if not spot:GetAttribute("Occupied") or (spot:GetAttribute("Occupied") and spot:GetAttribute("Occupied") == false) then
+			local t= os.time()
+			GetFood()
+			repeat wait()
+				if (os.time()-t >=1) and (not spot:GetAttribute("Occupied") or (spot:GetAttribute("Occupied") and spot:GetAttribute("Occupied") == false)) then
+					t= os.time()
+					GetFood()
+				end
+			until spot:GetAttribute("Occupied") and spot:GetAttribute("Occupied") == true
+		end
+	end
+end
+
+function FillPlates()
+	if Player.Character:FindFirstChildWhichIsA("Tool") and Player.Character:FindFirstChildWhichIsA("Tool"):FindFirstChild("1",true) then
+		local handle = Player.Character:FindFirstChildWhichIsA("Tool").Handle
+		if not CheckIfAllFilled(handle) then
+			GrabFood(handle)
+		end
+	end
+	for i,v in pairs(Player.Backpack:GetChildren()) do
+		if v.Handle:FindFirstChild("1") then
+			if not CheckIfAllFilled(v.Handle) then
+				v.Parent = Player.Character
+				wait()
+				GrabFood(v.Handle)
+			end
+		end
+	end
+end
+
+function GetPlate(num)
+	local Inventory = game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.7.0"].knit.Services.MoneyService.RF.ReturnInventory:InvokeServer()
+	local MyPlate
+	local Rarity
+	for i,v in pairs(Inventory.Plate) do
+		if MyPlate and Rarity then
+			if Plates:FindFirstChild(i) and Compare(Rarity,Plates[i]:GetAttribute("Rarity")) then
+				Rarity = Plates[i]:GetAttribute("Rarity")
+				MyPlate = i
+			end
+		else
+			MyPlate = i
+			Rarity = Plates[MyPlate]:GetAttribute("Rarity")
+		end
+	end
+	if num and tonumber(num) then
+		if #Player.Backpack:GetChildren()>=9 then
+			return
+		end
+		if #Player.Backpack:GetChildren() + num >9 then
+			num = - 9 - #Player.Backpack:GetChildren() 
+		end
+		for i=1,num do
+			game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.7.0"].knit.Services.InventoryService.RF.AddToBackpack(MyPlate)
+		end
+	else
+		if #Player.Backpack:GetChildren()>=9 then
+			return
+		end
+		game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.7.0"].knit.Services.InventoryService.RF.AddToBackpack(MyPlate)
+	end
+end
+
+function GetFood()
+	local Name 
+	local RFood = Consumables:GetChildren()[math.random(1,#Consumables:GetChildren())]
+	local GNC = GetNumberAttributes(RFood)
+	if GNC > 1 then
+		Name = GetAttributeFromNumber(RFood,math.random(1,GNC))
+	else
+		Name = RFood.Name
+	end
+	game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.7.0"].knit.Services.ForkService.RF.AddToPlate:InvokeServer(Name)
+end
+
+FillPlates()
+
+--[[
+repeat wait()
+	local Table = GetTable()
+	local Plate = GetTablePlate()
+	local Fork = game.Players.LocalPlayer.Backpack:FindFirstChild("Fork") or game.Players.LocalPlayer.Character:FindFirstChild("Fork")
+
+	if Fork then
+		if Fork.Parent == game.Players.LocalPlayer.Backpack then
+			Fork.Parent = game.Players.LocalPlayer.Character
+		end
+		if #Fork.Handle.Attachment:GetChildren() > 0 then
+			game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.7.0"].knit.Services.ForkService.RF.ConsumableConsumed:InvokeServer(Fork.Handle.Attachment:GetChildren()[1])
+		end
+	end
+	if Plate then
+		local Food = Plate:FindFirstChild("Food",true)
+		if Food then
+			game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.7.0"].knit.Services.ForkService.RF.ConsumableInteracted:InvokeServer(Food:GetChildren()[1])
+		else
+			local Plates = Table.Plates
+			local PlatesFood = Plates:FindFirstChild("Food",true)
+			if PlatesFood then
+				game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.7.0"].knit.Services.ForkService.RF.CookedInteracted:InvokeServer(PlatesFood)
+			else
+				game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.7.0"].knit.Services.ForkService.RF.CallWaiter:InvokeServer(PlatesFood)
+			end
+		end
+	end
+until os.time()-t>=10]]
