@@ -1,5 +1,4 @@
-print("Added VIP Check")
-print("Fixed Bugs")
+print("Fixed RFood")
 local Consumables = workspace.Consumables
 local Player = game.Players.LocalPlayer
 local Plates = game:GetService("ReplicatedStorage").Assets.Plates
@@ -179,7 +178,7 @@ function GetFood()
 	repeat wait()
 		local CFood = RSConsumables:FindFirstChild(RFood)
 		if CFood and VIPCheck(CFood) then
-			VFood = CFood
+			VFood = RFood
 		else
 			RFood = Consumables:GetChildren()[math.random(1,#Consumables:GetChildren())]
 		end
