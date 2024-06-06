@@ -1,4 +1,4 @@
-print("LOL")
+print("LOL 2")
 local Consumables = workspace.Consumables
 local Player = game.Players.LocalPlayer
 local Plates = game:GetService("ReplicatedStorage").Assets.Plates
@@ -148,7 +148,7 @@ function GetPlate(num)
 			return
 		end
 		if #Player.Backpack:GetChildren() + num >9 then
-			num = - 9 - #Player.Backpack:GetChildren() 
+			num = 9 - #Player.Backpack:GetChildren() 
 		end
 		for i=1,num do
 			game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.7.0"].knit.Services.InventoryService.RF.AddToBackpack(MyPlate)
