@@ -1,4 +1,4 @@
-print("Validating 2")
+print("Placing Plates")
 local Consumables = workspace.Consumables
 local Player = game.Players.LocalPlayer
 local Plates = game:GetService("ReplicatedStorage").Assets.Plates
@@ -161,6 +161,88 @@ function GetPlate(num)
 	end
 end
 
+function GetSurfacePosition(part)
+	local RNG = Random.new()
+	local size = part.Size
+	local x = size.x/2
+	local y = size.y/2
+	local z = size.z/2
+	local pos = part.Position
+	local cf = part.CFrame
+	local ray = Ray.new(Vector3.new(pos.x,pos.y+y+0.01,pos.z),Vector3.new(0,-0.01,0))
+	local part2,posy,surfacepos = workspace:FindPartOnRayWithWhitelist(ray,{part})
+
+	local sizex = RNG:NextNumber(-x,x)
+	local sizez = RNG:NextNumber(-z,z)
+	local newposx = pos.x+sizex
+	local newposz = pos.z+ sizez
+
+	--posy = posy + (v38.PrimaryPart.Size/2)
+	local mycf = CFrame.new(newposx,posy.y,newposz) * CFrame.Angles(math.rad(0), math.rad(0), math.rad(0))
+	return mycf
+end
+
+function GetNumberOfPlateAreas(Table)
+	local count = 0
+	for i,v in pairs(Table:GetChildren()) do
+		if v.Name == "PlateArea" then
+			count = count+1
+		end
+	end
+	return count
+end
+
+function GetPlateAreaFromNumber(Table,num) 
+	local count = 0
+	for i,v in pairs(Table:GetChildren()) do
+		if v.Name == "PlateArea" then
+			count = count+1
+			if num == count then
+				return v
+			end
+		end
+	end
+end
+
+function PlacePlate(tool)
+	local platearea = GetRPlateArea()
+	if platearea then
+		local cf = GetSurfacePosition(platearea)
+		if cf then
+			game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.7.0"].knit.Services.PlateService.RF.PlacePlate:InvokeServer(tool,platearea,cf)
+		end
+	end
+end
+
+function PlaceDownPlates()
+	local tool = Player.Character:FindFirstChildWhichIsA("Tool")
+	if tool then
+		if tool.Handle:FindFirstChild("1") and tool.Handle:FindFirstChild("1"):GetAttribute("Occupied") and tool.Handle:FindFirstChild("1"):GetAttribute("Occupied") == true then
+			PlacePlate(tool)
+		end
+	end
+	for i,v in pairs(Player.Backpack:GetChildren()) do
+		if v.Handle:FindFirstChild("1") and v.Handle:FindFirstChild("1"):GetAttribute("Occupied") and v.Handle:FindFirstChild("1"):GetAttribute("Occupied") == true then
+			PlacePlate(tool)
+		end
+	end
+end
+
+function GetRPlateArea()
+	local Seat = GetSeat()
+	local Table
+	if Seat then
+		Table = Seat:FindFirstAncestor("Table")
+	end
+	if Table then
+		local numberofplateareas = GetNumberOfPlateAreas(Table)
+		if numberofplateareas > 0 then
+			local rnplate = math.random(1,numberofplateareas)
+			return GetPlateAreaFromNumber(Table,rnplate)
+		end
+	end
+end
+
 function Validate(c)
 	if not c then
 		return false
@@ -178,6 +260,7 @@ function Validate(c)
 	end
 	return false
 end
+
 function GetFood(handle)
 	local Name 
 	local RFood
@@ -198,7 +281,7 @@ function GetFood(handle)
 	game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.7.0"].knit.Services.IngredientService.RF.AddToPlate:InvokeServer(Name)
 end
 
-FillPlates()
+PlaceDownPlates()
 
 --[[
 repeat wait()
