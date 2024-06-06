@@ -1,4 +1,4 @@
-print("Validating")
+print("Validating 2")
 local Consumables = workspace.Consumables
 local Player = game.Players.LocalPlayer
 local Plates = game:GetService("ReplicatedStorage").Assets.Plates
@@ -161,37 +161,36 @@ function GetPlate(num)
 	end
 end
 
-function VIPCheck(c)
-	if c:GetAttribute("VIP") and c:GetAttribute("VIP") == true then
-		if MarketPlace:UserOwnsGamePassAsync(Player.UserId,817740770) then
-			return true
-		else
-			return false
-		end
+function Validate(c)
+	if not c then
+		return false
 	end
-	return true
+	local RSFood = RSConsumables:FindFirstChild(c.Name)
+	if RSFood then
+		if RSFood:GetAttribute("VIP") and RSFood:GetAttribute("VIP") == true then
+			if MarketPlace:UserOwnsGamePassAsync(Player.UserId,817740770) then
+				return true
+			else
+				return false
+			end
+		end
+		return true
+	end
+	return false
 end
 function GetFood(handle)
 	local Name 
-	local RFood = Consumables:GetChildren()[math.random(1,#Consumables:GetChildren())]
+	local RFood
 	local VFood
-	print("Validating Food")
 	repeat wait()
-		local CFood = RSConsumables:FindFirstChild(RFood)
-		if CFood and VIPCheck(CFood) then
-			VFood = RFood
-		else
-			RFood = Consumables:GetChildren()[math.random(1,#Consumables:GetChildren())]
-		end
-	until VFood
-	print(VFood)
-	local GNC = GetNumberAttributes(VFood)
+		RFood = Consumables:GetChildren()[math.random(1,#Consumables:GetChildren())]
+	until Validate(RFood)
+	local GNC = GetNumberAttributes(RFood)
 	if GNC > 1 then
-		Name = GetAttributeFromNumber(VFood,math.random(1,GNC))
+		Name = GetAttributeFromNumber(RFood,math.random(1,GNC))
 	else
-		Name = VFood.Name
+		Name = RFood.Name
 	end
-	print(Name)
 	local tool = handle:FindFirstAncestorWhichIsA("Tool")
 	if tool.Parent ~= Player.Character then
 		Player.Character.Humanoid:EquipTool(tool)
