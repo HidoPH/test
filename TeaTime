@@ -1,4 +1,4 @@
-print("LOL 3")
+print("Fixed MyPlate")
 local Consumables = workspace.Consumables
 local Player = game.Players.LocalPlayer
 local Plates = game:GetService("ReplicatedStorage").Assets.Plates
@@ -151,13 +151,13 @@ function GetPlate(num)
 			num = 9 - #Player.Backpack:GetChildren() 
 		end
 		for i=1,num do
-			game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.7.0"].knit.Services.InventoryService.RF.AddToBackpack(MyPlate)
+			game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.7.0"].knit.Services.InventoryService.RF.AddToBackpack:InvokeServer(MyPlate)
 		end
 	else
 		if #Player.Backpack:GetChildren()>=9 then
 			return
 		end
-		game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.7.0"].knit.Services.InventoryService.RF.AddToBackpack(MyPlate)
+		game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.7.0"].knit.Services.InventoryService.RF.AddToBackpack:InvokeServer(MyPlate)
 	end
 end
 
