@@ -92,7 +92,7 @@ function CheckIfAllFilled(handle)
 end
 
 function GrabFood(handle)
-	for i=1,#GetNumberOfSpots(handle) do
+	for i=1,GetNumberOfSpots(handle) do
 		local spot = handle[tostring(i)]
 		if not spot:GetAttribute("Occupied") or (spot:GetAttribute("Occupied") and spot:GetAttribute("Occupied") == false) then
 			local t= os.time()
