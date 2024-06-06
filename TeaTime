@@ -29,11 +29,11 @@ function GetTable()
 end
 
 function GetNumberAttributes(c)
-	local c = 0
+	local count = 0
 	for i,v in pairs(c:GetAttributes()) do
-		c = c+1
+		count = count+1
 	end
-	return c
+	return count
 end
 
 function GetAttributeFromNumber(c,n)
@@ -92,7 +92,7 @@ function CheckIfAllFilled(handle)
 end
 
 function GrabFood(handle)
-	for i=1, GetNumberOfSpots(handle) do
+	for i=1,GetNumberOfSpots(handle) do
 		local spot = handle[tostring(i)]
 		if not spot:GetAttribute("Occupied") or (spot:GetAttribute("Occupied") and spot:GetAttribute("Occupied") == false) then
 			local t= os.time()
@@ -169,7 +169,7 @@ function GetFood()
 	end
 	game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.7.0"].knit.Services.ForkService.RF.AddToPlate:InvokeServer(Name)
 end
-print("v 1.02")
+print("v 1.0.3")
 FillPlates()
 
 --[[
