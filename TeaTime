@@ -1,8 +1,10 @@
-print("Fixed GetAttributeFromNumber")
+print("Added VIP Check")
+print("Fixed Bugs")
 local Consumables = workspace.Consumables
 local Player = game.Players.LocalPlayer
 local Plates = game:GetService("ReplicatedStorage").Assets.Plates
-
+local RSConsumables = game:GetService("ReplicatedStorage").Assets.Consumables
+local MarketPlace = game.MarketplaceService
 function GetTablePlate()
 	local Seat = GetSeat()
 	local Plate
@@ -106,6 +108,7 @@ function GrabFood(handle)
 			until spot:GetAttribute("Occupied") and spot:GetAttribute("Occupied") == true
 		end
 	end
+	wait()
 end
 
 function FillPlates()
@@ -118,7 +121,7 @@ function FillPlates()
 	for i,v in pairs(Player.Backpack:GetChildren()) do
 		if v.Handle:FindFirstChild("1") then
 			if not CheckIfAllFilled(v.Handle) then
-				v.Parent = Player.Character
+				Player.Character.Humanoid:EquipTool(v)
 				wait()
 				GrabFood(v.Handle)
 			end
@@ -159,14 +162,33 @@ function GetPlate(num)
 	end
 end
 
+function VIPCheck(c)
+	if c:GetAttribute("VIP") and c:GetAttribute("VIP") == true then
+		if MarketPlace:UserOwnsGamePassAsync(Player.UserId,817740770) then
+			return true
+		else
+			return false
+		end
+	end
+	return true
+end
 function GetFood()
 	local Name 
 	local RFood = Consumables:GetChildren()[math.random(1,#Consumables:GetChildren())]
-	local GNC = GetNumberAttributes(RFood)
+	local VFood
+	repeat wait()
+		local CFood = RSConsumables:FindFirstChild(RFood)
+		if CFood and VIPCheck(CFood) then
+			VFood = CFood
+		else
+			RFood = Consumables:GetChildren()[math.random(1,#Consumables:GetChildren())]
+		end
+	until VFood
+	local GNC = GetNumberAttributes(VFood)
 	if GNC > 1 then
-		Name = GetAttributeFromNumber(RFood,math.random(1,GNC))
+		Name = GetAttributeFromNumber(VFood,math.random(1,GNC))
 	else
-		Name = RFood.Name
+		Name = VFood.Name
 	end
 	game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.7.0"].knit.Services.IngredientService.RF.AddToPlate:InvokeServer(Name)
 end
