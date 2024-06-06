@@ -1,4 +1,4 @@
-print("LOL 2")
+print("LOL 3")
 local Consumables = workspace.Consumables
 local Player = game.Players.LocalPlayer
 local Plates = game:GetService("ReplicatedStorage").Assets.Plates
@@ -211,7 +211,7 @@ function PlacePlate(tool)
 		if cf then
 			local orientaion,size = tool:GetBoundingBox()
 			local newcf = cf + Vector3.new(0,size.y/2,0)
-			game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.7.0"].knit.Services.PlateService.RF.PlacePlate:InvokeServer(tool,platearea,cf)
+			game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.7.0"].knit.Services.PlateService.RF.PlacePlate:InvokeServer(tool,platearea,newcf)
 		end
 	end
 end
