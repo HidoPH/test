@@ -1,4 +1,4 @@
-print("Fixed RFood")
+print("Added Tool Equip")
 local Consumables = workspace.Consumables
 local Player = game.Players.LocalPlayer
 local Plates = game:GetService("ReplicatedStorage").Assets.Plates
@@ -98,11 +98,11 @@ function GrabFood(handle)
 		local spot = handle[tostring(i)]
 		if not spot:GetAttribute("Occupied") or (spot:GetAttribute("Occupied") and spot:GetAttribute("Occupied") == false) then
 			local t= os.time()
-			GetFood()
+			GetFood(handle)
 			repeat wait()
 				if (os.time()-t >=1) and (not spot:GetAttribute("Occupied") or (spot:GetAttribute("Occupied") and spot:GetAttribute("Occupied") == false)) then
 					t= os.time()
-					GetFood()
+					GetFood(handle)
 				end
 			until spot:GetAttribute("Occupied") and spot:GetAttribute("Occupied") == true
 		end
@@ -171,7 +171,7 @@ function VIPCheck(c)
 	end
 	return true
 end
-function GetFood()
+function GetFood(handle)
 	local Name 
 	local RFood = Consumables:GetChildren()[math.random(1,#Consumables:GetChildren())]
 	local VFood
@@ -188,6 +188,10 @@ function GetFood()
 		Name = GetAttributeFromNumber(VFood,math.random(1,GNC))
 	else
 		Name = VFood.Name
+	end
+	local tool = handle:FindFirstAncestorWhichIsA("Tool")
+	if tool.Parent ~= Player.Character then
+		Player.Character.Humanoid:EquipTool(tool)
 	end
 	game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.7.0"].knit.Services.IngredientService.RF.AddToPlate:InvokeServer(Name)
 end
