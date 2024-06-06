@@ -1,4 +1,4 @@
-print("Placing Plates")
+print("Fixed Tool Size")
 local Consumables = workspace.Consumables
 local Player = game.Players.LocalPlayer
 local Plates = game:GetService("ReplicatedStorage").Assets.Plates
@@ -209,6 +209,8 @@ function PlacePlate(tool)
 	if platearea then
 		local cf = GetSurfacePosition(platearea)
 		if cf then
+			local orientaion,size = tool:GetBoundingBox()
+			local newcf = cf + Vector3.new(0,size.y/2,0)
 			game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.7.0"].knit.Services.PlateService.RF.PlacePlate:InvokeServer(tool,platearea,cf)
 		end
 	end
@@ -223,7 +225,7 @@ function PlaceDownPlates()
 	end
 	for i,v in pairs(Player.Backpack:GetChildren()) do
 		if v.Handle:FindFirstChild("1") and v.Handle:FindFirstChild("1"):GetAttribute("Occupied") and v.Handle:FindFirstChild("1"):GetAttribute("Occupied") == true then
-			PlacePlate(tool)
+			PlacePlate(v)
 		end
 	end
 end
