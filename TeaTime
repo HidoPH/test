@@ -1,4 +1,4 @@
-print("Fixed AddToPlate")
+print("Fixed GetAttributeFromNumber")
 local Consumables = workspace.Consumables
 local Player = game.Players.LocalPlayer
 local Plates = game:GetService("ReplicatedStorage").Assets.Plates
@@ -38,10 +38,10 @@ function GetNumberAttributes(c)
 end
 
 function GetAttributeFromNumber(c,n)
-	local c = 0
+	local count = 0
 	for i,v in pairs(c:GetAttributes()) do
-		c = c+1
-		if c == n then
+		count = count+1
+		if count == n then
 			return v
 		end
 	end
