@@ -1,4 +1,4 @@
-print("Fixed MyPlate")
+print("Mythic Match")
 local Consumables = workspace.Consumables
 local Player = game.Players.LocalPlayer
 local Plates = game:GetService("ReplicatedStorage").Assets.Plates
@@ -47,8 +47,10 @@ function GetAttributeFromNumber(c,n)
 		end
 	end
 end
-
 function Compare(o,t)
+	if o == t then
+		return (math.random(1,2) == 1)
+	end
 	if o == "Common" then
 		if t~="Common" then
 			return true
@@ -209,7 +211,7 @@ function PlacePlate(tool)
 	if platearea then
 		local cf = GetSurfacePosition(platearea)
 		if cf then
-			local orientaion,size = tool:GetBoundingBox()
+			local size = tool:GetExtentsSize()
 			local newcf = cf + Vector3.new(0,size.y/2,0)
 			game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.7.0"].knit.Services.PlateService.RF.PlacePlate:InvokeServer(tool,platearea,newcf)
 		end
