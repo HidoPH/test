@@ -107,10 +107,6 @@ function GetFood(handle)
 	else
 		Name = RFood.Name
 	end
-	local tool = handle:FindFirstAncestorWhichIsA("Tool")
-	if tool.Parent ~= Player.Character then
-		Player.Character.Humanoid:EquipTool(tool)
-	end
 	return RFood
 end
 
