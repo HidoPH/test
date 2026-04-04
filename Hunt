@@ -1,1 +1,1344 @@
-if game.PlaceId==120217704230083 then return end repeat wait()until game:IsLoaded() local o=3.165 local _=loadstring(game:HttpGet(('\x68\x74\x74\x70\x73\x3A\x2F\x2F\x72\x61\x77\x2E\x67\x69\x74\x68\x75\x62\x75\x73\x65\x72\x63\x6F\x6E\x74\x65\x6E\x74\x2E\x63\x6F\x6D\x2F\x62\x6C\x6F\x6F\x64\x62\x61\x6C\x6C\x2F\x2D\x62\x61\x63\x6B\x2D\x75\x70\x73\x2D\x66\x6F\x72\x2D\x6C\x69\x62\x73\x2F\x6D\x61\x69\x6E\x2F\x77\x61\x6C\x6C\x25\x32\x30\x76\x33')))() local s="\x44\x75\x6E\x67\x65\x6F\x6E\x48\x75\x6E\x74\x65\x72\x73\x53\x65\x74\x74\x69\x6E\x67\x73\x2E\x74\x78\x74" local j=isfile(s) local _=_:CreateWindow("\x44\x75\x6E\x67\x65\x6F\x6E\x20\x48\x75\x6E\x74\x65\x72\x73") local v=_:CreateFolder("\x43\x68\x65\x61\x74\x73") local c=_:CreateFolder("\x41\x75\x74\x6F\x20\x46\x61\x72\x6D") local d=_:CreateFolder("\x41\x75\x74\x6F\x20\x46\x61\x72\x6D\x20\x53\x65\x74\x74\x69\x6E\x67\x73") local y=_:CreateFolder("\x56\x6F\x74\x69\x6E\x67\x20\x53\x65\x74\x74\x69\x6E\x67\x73") local _=_:CreateFolder("\x56\x65\x72\x73\x69\x6F\x6E") _:Label(o,{TextSize=25;TextColor=Color3.fromRGB(255,255,255);BgColor=Color3.fromRGB(69,69,69)}) local i=false local b=false local r=0 local t=0 local I=false local H=false local V=false local w=false local a={} local F=false local G=false local K=false local x=0.2 local L=false local u={SkipLastBoss=false,FPSCap=false,FPSValue=60,AutoFarm=false,UseCustomWaitTime=false,CustomWaitTime=0.85} local ba={{Name="\x44\x69\x61\x6D\x6F\x6E\x64",Image="\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F\x37\x38\x35\x39\x35\x34\x32\x35\x38\x30\x34\x35\x31\x37",Priority=1},{Name="\x58\x50",Image="\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F\x38\x33\x36\x35\x31\x31\x36\x35\x38\x38\x35\x30\x37\x39",Priority=2},{Name="\x53\x68\x61\x72\x64",Image="\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F\x37\x33\x39\x39\x38\x30\x39\x33\x37\x39\x39\x32\x31\x36",Priority=3},{Name="\x41\x72\x6D\x6F\x72",Image="\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F\x31\x33\x33\x30\x34\x37\x33\x33\x34\x39\x38\x38\x37\x36\x37",Priority=4},{Name="\x50\x6F\x77\x65\x72",Image="\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F\x39\x31\x32\x35\x36\x39\x32\x34\x33\x33\x39\x33\x38\x36",Priority=5},{Name="\x48\x65\x61\x6C\x74\x68",Image="\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F\x31\x32\x32\x38\x34\x36\x31\x36\x31\x36\x33\x35\x36\x31\x39",Priority=6}} local k=(j and game:service'\x48\x74\x74\x70\x53\x65\x72\x76\x69\x63\x65':JSONDecode(readfile(s)))or u local n local l local q local p local m local h d:Slider("\x46\x50\x53\x20\x43\x61\x70",{min=15;max=240;precise=false},function(_)ChangeSettings("\x46\x50\x53\x56\x61\x6C\x75\x65",_) RefreshSettings()end) p=d:Label("\x36\x30",{TextSize=25;TextColor=Color3.fromRGB(255,255,255);BgColor=Color3.fromRGB(69,69,69)}) c:Button("\x52\x75\x6E\x20\x41\x75\x74\x6F\x66\x61\x72\x6D",function()ChangeSettings("\x41\x75\x74\x6F\x46\x61\x72\x6D",not GetSettingsValue("\x41\x75\x74\x6F\x46\x61\x72\x6D")) RefreshSettings() RunAutoFarm()end) q=c:Label("\x74\x72\x75\x65",{TextSize=25;TextColor=Color3.fromRGB(255,255,255);BgColor=Color3.fromRGB(69,69,69)}) d:Button("\x53\x6B\x69\x70\x20\x4C\x61\x73\x74\x20\x42\x6F\x73\x73",function()ChangeSettings("\x53\x6B\x69\x70\x4C\x61\x73\x74\x42\x6F\x73\x73",not GetSettingsValue("\x53\x6B\x69\x70\x4C\x61\x73\x74\x42\x6F\x73\x73")) RefreshSettings()end) n=d:Label("\x74\x72\x75\x65",{TextSize=25;TextColor=Color3.fromRGB(255,255,255);BgColor=Color3.fromRGB(69,69,69)}) d:Button("\x53\x65\x74\x20\x46\x50\x53\x20\x43\x61\x70",function()ChangeSettings("\x46\x50\x53\x43\x61\x70",not GetSettingsValue("\x46\x50\x53\x43\x61\x70")) RefreshSettings()end) l=d:Label("\x74\x72\x75\x65",{TextSize=25;TextColor=Color3.fromRGB(255,255,255);BgColor=Color3.fromRGB(69,69,69)}) d:Button("\x55\x73\x65\x20\x43\x75\x73\x74\x6F\x6D\x20\x57\x61\x69\x74\x20\x54\x69\x6D\x65",function()ChangeSettings("\x55\x73\x65\x43\x75\x73\x74\x6F\x6D\x57\x61\x69\x74\x54\x69\x6D\x65",not GetSettingsValue("\x55\x73\x65\x43\x75\x73\x74\x6F\x6D\x57\x61\x69\x74\x54\x69\x6D\x65")) RefreshSettings()end) h=d:Label("\x66\x61\x6C\x73\x65",{TextSize=25;TextColor=Color3.fromRGB(255,255,255);BgColor=Color3.fromRGB(69,69,69)}) d:Slider("\x53\x6B\x69\x6C\x6C\x73\x20\x57\x61\x69\x74\x20\x54\x69\x6D\x65",{min=0.1;max=3;precise=true},function(_)ChangeSettings("\x43\x75\x73\x74\x6F\x6D\x57\x61\x69\x74\x54\x69\x6D\x65",_) RefreshSettings()end) m=d:Label("\x30",{TextSize=25;TextColor=Color3.fromRGB(255,255,255);BgColor=Color3.fromRGB(69,69,69)}) local c={} for _,_ in pairs(ba)do table.insert(c,_.Name)end local _=y:Dropdown("\x31",c,false,function(_)ChangePriority(1,_)end) local g=y:Label("\x31",{TextSize=25;TextColor=Color3.fromRGB(255,255,255);BgColor=Color3.fromRGB(69,69,69)}) local _=y:Dropdown("\x32",c,false,function(_)ChangePriority(2,_)end) local f=y:Label("\x32",{TextSize=25;TextColor=Color3.fromRGB(255,255,255);BgColor=Color3.fromRGB(69,69,69)}) local _=y:Dropdown("\x33",c,false,function(_)ChangePriority(3,_)end) local e=y:Label("\x33",{TextSize=25;TextColor=Color3.fromRGB(255,255,255);BgColor=Color3.fromRGB(69,69,69)}) local _=y:Dropdown("\x34",c,false,function(_)ChangePriority(4,_)end) local d=y:Label("\x34",{TextSize=25;TextColor=Color3.fromRGB(255,255,255);BgColor=Color3.fromRGB(69,69,69)}) local _=y:Dropdown("\x35",c,false,function(_)ChangePriority(5,_)end) local c=y:Label("\x35",{TextSize=25;TextColor=Color3.fromRGB(255,255,255);BgColor=Color3.fromRGB(69,69,69)}) v:Toggle("\x41\x75\x74\x6F\x20\x41\x74\x74\x61\x63\x6B",function(_)V=_ spawn(function()RunRepeat()end) Speed()end) v:Toggle("\x41\x75\x74\x6F\x20\x53\x6B\x69\x6C\x6C\x73",function(_)F=_ spawn(function()RunRepeat()end) Speed()end) v:Toggle("\x41\x74\x74\x61\x63\x6B\x20\x4E\x6F\x20\x53\x6C\x6F\x77",function(_)b=_ Speed()end) v:Toggle("\x4C\x6F\x6E\x67\x20\x44\x61\x73\x68",function(_)if _ then for _,_ in pairs(getgc(true))do if type(_)=="\x74\x61\x62\x6C\x65"and rawget(_,"\x44\x69\x73\x74\x61\x6E\x63\x65")and rawget(_,"\x44\x75\x72\x61\x74\x69\x6F\x6E")and rawget(_,"\x54\x69\x6D\x65")then if t==0 then t=_.Distance end if r==0 then r=_.Duration end _.Duration=250 _.Distance=40 end end else for _,_ in pairs(getgc(true))do if type(_)=="\x74\x61\x62\x6C\x65"and rawget(_,"\x44\x69\x73\x74\x61\x6E\x63\x65")and rawget(_,"\x44\x75\x72\x61\x74\x69\x6F\x6E")and rawget(_,"\x54\x69\x6D\x65")then _.Duration=r _.Distance=t end end end end) v:Toggle("\x41\x75\x74\x6F\x20\x55\x73\x65\x20\x42\x75\x66\x66\x73",function(_)H=_ spawn(function()RunRepeat()end)end) v:Slider("\x42\x75\x66\x66\x73\x20\x57\x61\x69\x74\x20\x54\x69\x6D\x65",{min=0.10;max=2;precise=true},function(_)x=_ end) v:Toggle("\x44\x69\x73\x61\x62\x6C\x65\x20\x53\x69\x63\x6B\x6C\x65\x20\x53\x70\x61\x6D\x20\x45\x66\x66\x65\x63\x74",function(_)G=_ end) v:Toggle("\x49\x67\x6E\x6F\x72\x65\x20\x53\x61\x66\x65\x20\x50\x61\x64\x73",function(_)w=_ end) v:Button("\x4B\x69\x6C\x6C\x20\x73\x65\x6C\x66\x20\x61\x6E\x64\x20\x72\x65\x6A\x6F\x69\x6E",function()game:GetService("\x52\x65\x70\x6C\x69\x63\x61\x74\x65\x64\x53\x74\x6F\x72\x61\x67\x65").Dungeon.Remote.DungeonFailed.OnClientEvent:connect(function()game:GetService("\x52\x65\x70\x6C\x69\x63\x61\x74\x65\x64\x53\x74\x6F\x72\x61\x67\x65").Dungeon.Remote.RequestReplayDungeon:InvokeServer()end) game.Players.LocalPlayer.Character.Humanoid.Health=0 end) function RefreshVotingLabels()for _,_ in pairs(ba)do if _.Priority==1 then g:Refresh(_.Name)elseif _.Priority==2 then f:Refresh(_.Name)elseif _.Priority==3 then e:Refresh(_.Name)elseif _.Priority==4 then d:Refresh(_.Name)elseif _.Priority==5 then c:Refresh(_.Name)end end end function GetNameFromPriority(a)for _,_ in pairs(ba)do if _.Priority==a then return _.Name end end end function ChangeItemPriorityTo(a,b)for _,_ in pairs(ba)do if _.Name==a then _.Priority=b break end end end function GetSettingsValue(_)return u[_]end function ChangeSettings(_,a)u[_]=a SaveSettings()end function ChangePriority(c,a)for _,b in pairs(ba)do if b.Name==a and b.Priority~=c then local _=GetNameFromPriority(c) ChangeItemPriorityTo(_,b.Priority) ChangeItemPriorityTo(a,c)end end RefreshVotingLabels() SaveSettings()end function RefreshSettings()n:Refresh(tostring(GetSettingsValue("\x53\x6B\x69\x70\x4C\x61\x73\x74\x42\x6F\x73\x73"))) l:Refresh(tostring(GetSettingsValue("\x46\x50\x53\x43\x61\x70"))) q:Refresh(tostring(GetSettingsValue("\x41\x75\x74\x6F\x46\x61\x72\x6D"))) p:Refresh(tostring(GetSettingsValue("\x46\x50\x53\x56\x61\x6C\x75\x65"))) m:Refresh(tostring(GetSettingsValue("\x43\x75\x73\x74\x6F\x6D\x57\x61\x69\x74\x54\x69\x6D\x65"))) h:Refresh(tostring(GetSettingsValue("\x55\x73\x65\x43\x75\x73\x74\x6F\x6D\x57\x61\x69\x74\x54\x69\x6D\x65")))end function LoadPrioritiesFromFile()if j then for _,_ in pairs(ba)do _.Priority=k[_.Name]or _.Priority end end end function LoadSettingsFromFile()for a,_ in pairs(u)do u[a]=k[a]or u[a]end end function SaveSettings()for _,_ in pairs(ba)do u[_.Name]=_.Priority end writefile(s,game:service'\x48\x74\x74\x70\x53\x65\x72\x76\x69\x63\x65':JSONEncode(u))end function Speed()if not i then i=true local _=game.Players.LocalPlayer.Character.Humanoid.WalkSpeed~=0 and game.Players.LocalPlayer.Character.Humanoid.WalkSpeed or 22 local a=getgenv().WalkSpeedSpoof local a=a and a.Disable if a then a()end local i=cloneref or function(...)return...end local l={} local a=i(game:GetService("\x50\x6C\x61\x79\x65\x72\x73")) if not a.LocalPlayer then a:GetPropertyChangedSignal("\x4C\x6F\x63\x61\x6C\x50\x6C\x61\x79\x65\x72"):Wait()end local e=i(a.LocalPlayer) local b=string.split local g=Instance.new("\x42\x69\x6E\x64\x61\x62\x6C\x65\x46\x75\x6E\x63\x74\x69\x6F\x6E") local c=Instance.new("\x48\x75\x6D\x61\x6E\x6F\x69\x64") local k={} local j local f local h function g.OnInvoke(_)return _:GetDebugId()end local function d(_)return g:Invoke(_)end local function a(_)c.WalkSpeed=_ return c.WalkSpeed end function k:cacheHumanoid(a,_)k[a]={currentindex=h(_,"\x57\x61\x6C\x6B\x53\x70\x65\x65\x64"),lastnewindex=nil} return self[a]end h=hookmetamethod(game,"\x5F\x5F\x69\x6E\x64\x65\x78",function(f,_)if not checkcaller()and typeof(f)=="\x49\x6E\x73\x74\x61\x6E\x63\x65"then if f:IsA("\x48\x75\x6D\x61\x6E\x6F\x69\x64")then local a=d(f) local c=k[a] if f:IsDescendantOf(e.Character)or c then if type(_)=="\x73\x74\x72\x69\x6E\x67"then local _=b(_,"\0")[1] if _=="\x57\x61\x6C\x6B\x53\x70\x65\x65\x64"then if not c then c=k:cacheHumanoid(a,f)end if not(j and j:IsDescendantOf(game))then j=i(f)end return c.lastnewindex or c.currentindex end end end end end return h(f,_)end) f=hookmetamethod(game,"\x5F\x5F\x6E\x65\x77\x69\x6E\x64\x65\x78",function(g,_,c)if not checkcaller()and typeof(g)=="\x49\x6E\x73\x74\x61\x6E\x63\x65"then if g:IsA("\x48\x75\x6D\x61\x6E\x6F\x69\x64")then local d=d(g) local f=k[d] if g:IsDescendantOf(e.Character)or f then if type(_)=="\x73\x74\x72\x69\x6E\x67"then local _=b(_,"\0")[1] if _=="\x57\x61\x6C\x6B\x53\x70\x65\x65\x64"then if not f then f=k:cacheHumanoid(d,g)end if not(j and j:IsDescendantOf(game))then j=i(g)end f.lastnewindex=a(c) return j.WalkSpeed end end end end end return f(g,_,c)end) function l:Disable()l:RestoreWalkSpeed() hookmetamethod(game,"\x5F\x5F\x69\x6E\x64\x65\x78",h) hookmetamethod(game,"\x5F\x5F\x6E\x65\x77\x69\x6E\x64\x65\x78",f) g:Destroy() c:Destroy() table.clear(l) getgenv().WalkSpeedSpoof=nil end function l:GetHumanoid()return j or(function()local _=e.Character local _=_ and _:FindFirstChildWhichIsA("\x48\x75\x6D\x61\x6E\x6F\x69\x64")or nil if _ then k:cacheHumanoid(_:GetDebugId(),_) return i(_)end end)()end function l:SetWalkSpeed(_)local c=l:GetHumanoid() if c then local a={} local function b(_)for _,_ in getconnections(_)do if _.State then _:Disable() table.insert(a,_)end end end b(c.Changed) b(c:GetPropertyChangedSignal("\x57\x61\x6C\x6B\x53\x70\x65\x65\x64")) c.WalkSpeed=_ for _,_ in a do _:Enable()end end end function l:RestoreWalkSpeed()local _=l:GetHumanoid() if _ then local _=k[_:GetDebugId()] if _ then l:SetWalkSpeed(_.lastnewindex or _.currentindex)end end end getgenv().WalkSpeedSpoof=l game.Players.LocalPlayer.Character.Humanoid:GetPropertyChangedSignal("\x57\x61\x6C\x6B\x53\x70\x65\x65\x64"):Connect(function()l:SetWalkSpeed(_)end)end end LoadPrioritiesFromFile() LoadSettingsFromFile() local Q=game.Players.LocalPlayer if not Q.Character then Q.CharacterAdded:wait()end repeat wait()until workspace:FindFirstChild("\x53\x61\x6E\x64\x62\x6F\x78\x50\x6C\x61\x79\x46\x6F\x6C\x64\x65\x72") repeat wait()until workspace:FindFirstChild("\x43\x72\x65\x61\x74\x75\x72\x65") repeat wait()until workspace.Creature:FindFirstChild("\x41\x63\x74\x69\x76\x61\x74\x69\x6F\x6E") repeat wait()until#workspace.Creature.Activation:GetChildren()>4 local _=3 local i=workspace.Creature.Activation local J="\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F\x31\x33\x36\x38\x38\x38\x30\x37\x36\x38\x31\x30\x39\x33\x35" local E="\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F\x31\x32\x36\x33\x30\x39\x31\x30\x38\x32\x39\x38\x34\x38\x36" local A="\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F\x39\x39\x38\x38\x30\x30\x35\x34\x33\x36\x32\x31\x33\x33" local _="\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F\x38\x33\x36\x35\x31\x31\x36\x35\x38\x38\x35\x30\x37\x39" local b="\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F\x31\x30\x38\x36\x32\x34\x35\x33\x33\x31\x31\x35\x30\x30\x35" local m="\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F\x31\x30\x31\x35\x31\x33\x35\x38\x37\x36\x32\x31\x38\x38\x37" local _="\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F\x31\x33\x33\x30\x34\x37\x33\x33\x34\x39\x38\x38\x37\x36\x37" local _="\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F\x31\x33\x33\x31\x32\x39\x37\x39\x31\x36\x32\x32\x39\x39\x31" local _="\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F\x37\x38\x35\x39\x35\x34\x32\x35\x38\x30\x34\x35\x31\x37" local _="\x72\x62\x78\x61\x73\x73\x65\x74\x69\x64\x3A\x2F\x2F\x39\x31\x32\x35\x36\x39\x32\x34\x33\x33\x39\x33\x38\x36" local _a=require(game:GetService("\x52\x65\x70\x6C\x69\x63\x61\x74\x65\x64\x53\x74\x6F\x72\x61\x67\x65").Tools.Script.ErrorCode) local R=game:GetService('\x56\x69\x72\x74\x75\x61\x6C\x49\x6E\x70\x75\x74\x4D\x61\x6E\x61\x67\x65\x72') local y=game:GetService("\x52\x65\x70\x6C\x69\x63\x61\x74\x65\x64\x53\x74\x6F\x72\x61\x67\x65").EquipmentSystem.Bindable.GetWeaponData local v=game:GetService("\x52\x65\x70\x6C\x69\x63\x61\x74\x65\x64\x53\x74\x6F\x72\x61\x67\x65").Dungeon.Remote.ReqCastVote local Y=Vector2.new(workspace.CurrentCamera.ViewportSize.X/2,workspace.CurrentCamera.ViewportSize.Y/2) local aa=workspace.SandboxPlayFolder local ca=game.Players.LocalPlayer local u=game:GetService("\x56\x69\x72\x74\x75\x61\x6C\x55\x73\x65\x72") local j=require(game:GetService("\x52\x65\x70\x6C\x69\x63\x61\x74\x65\x64\x53\x74\x6F\x72\x61\x67\x65").GameItem.Config.GameItemInfoConfig.Weapon) local n=require(game:GetService("\x52\x65\x70\x6C\x69\x63\x61\x74\x65\x64\x53\x74\x6F\x72\x61\x67\x65").Tools.Script.EnumCode) local h=game:GetService("\x52\x65\x70\x6C\x69\x63\x61\x74\x65\x64\x53\x74\x6F\x72\x61\x67\x65").EquipmentSystem.Bindable.GetPlayerHoldWeaponData local g=require(game:GetService("\x52\x65\x70\x6C\x69\x63\x61\x74\x65\x64\x53\x74\x6F\x72\x61\x67\x65").GameplayAbilitySystem.Config.GameplayEffectConfig) local s=require(game:GetService("\x52\x65\x70\x6C\x69\x63\x61\x74\x65\x64\x53\x74\x6F\x72\x61\x67\x65").Creature.Script.CreatureControllerClient) local t=require(game:GetService("\x52\x65\x70\x6C\x69\x63\x61\x74\x65\x64\x53\x74\x6F\x72\x61\x67\x65").GameplayAbilitySystem.Script.AbilitySystemComponentSubClassList.RpgASCClientClass) local Z=game:GetService("\x52\x65\x70\x6C\x69\x63\x61\x74\x65\x64\x53\x74\x6F\x72\x61\x67\x65").AbilityBar.Bindable.GetAbilityBarInfo local _=game:GetService("\x52\x65\x70\x6C\x69\x63\x61\x74\x65\x64\x53\x74\x6F\x72\x61\x67\x65").Sandbox.Remote.MonsterRemainingCountChanged local d=game:GetService("\x50\x6C\x61\x79\x65\x72\x73").LocalPlayer.PlayerGui.StageProgressGui.ContentFrame.TopFrame.StageProgressaArea.StageNumText.TotalNumText local c=game:GetService("\x50\x6C\x61\x79\x65\x72\x73").LocalPlayer.PlayerGui.StageProgressGui.ContentFrame.TopFrame.StageProgressaArea.StageNumText.CurrNumText local _=10 local f local e=n.AbilityIndex.SkillOne local l=n.AbilityIndex.SkillTwo local C=false local r=false local k=n.AbilityIndex.SkillThree local D=n.AbilityIndex.Attack local B=false local _=n.AbilityIndex.Dash local _="" local _=1 local S=false local U={} local z=false local X={} local M=false local O=1 local P=tick() local p={} local q={} local n local _="\x4F\x6E\x65" ca.Idled:connect(function()u:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame) wait(1) u:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)end) if not ca.PlayerGui:FindFirstChild("\x4D\x61\x69\x6E\x47\x75\x69")then repeat wait()until ca.PlayerGui:FindFirstChild("\x4D\x61\x69\x6E\x47\x75\x69")end local N=ca.PlayerGui.MainGui.BottomFrame.AbilityArea local u=game:GetService("\x50\x6C\x61\x79\x65\x72\x73").LocalPlayer.PlayerGui.MainGui.BottomFrame.WeaponScrollView if not Q.Character:FindFirstChild("\x48\x75\x6D\x61\x6E\x6F\x69\x64")then repeat wait()until ca.Character:FindFirstChild("\x48\x75\x6D\x61\x6E\x6F\x69\x64")end if not Q.Character:FindFirstChild("\x48\x75\x6D\x61\x6E\x6F\x69\x64\x52\x6F\x6F\x74\x50\x61\x72\x74")then repeat wait()until ca.Character:FindFirstChild("\x48\x75\x6D\x61\x6E\x6F\x69\x64\x52\x6F\x6F\x74\x50\x61\x72\x74")end if ca.Character.HumanoidRootPart:FindFirstChild("\x42\x6F\x64\x79\x50\x6F\x73\x69\x74\x69\x6F\x6E")then ca.Character.HumanoidRootPart:FindFirstChild("\x42\x6F\x64\x79\x50\x6F\x73\x69\x74\x69\x6F\x6E"):Destroy()end if ca.Character.HumanoidRootPart:FindFirstChild("\x42\x6F\x64\x79\x47\x79\x72\x6F")then ca.Character.HumanoidRootPart:FindFirstChild("\x42\x6F\x64\x79\x47\x79\x72\x6F"):Destroy()end if not ca.Character:FindFirstChild("\x47\x61\x6D\x65\x70\x6C\x61\x79\x41\x62\x69\x6C\x69\x74\x79\x4C\x69\x73\x74",true)then repeat wait()until ca.Character:FindFirstChild("\x47\x61\x6D\x65\x70\x6C\x61\x79\x41\x62\x69\x6C\x69\x74\x79\x4C\x69\x73\x74",true)end local T=ca.Character.HumanoidRootPart local W=Instance.new("\x42\x6F\x64\x79\x50\x6F\x73\x69\x74\x69\x6F\x6E") local Q=Instance.new("\x42\x6F\x64\x79\x47\x79\x72\x6F") Q.P=9e4 Q.maxTorque=Vector3.new(9e9,9e9,9e9) W.MaxForce=Vector3.new(9e9,9e9,9e9) function GetSkills()local _,a=Z:Invoke(ca,D) local e=ca.Character:FindFirstChild("\x47\x61\x6D\x65\x70\x6C\x61\x79\x41\x62\x69\x6C\x69\x74\x79\x4C\x69\x73\x74",true) local b=1 local d=false local c=false for f,_ in pairs(e:GetChildren())do local _=e[tostring(f)] if c then table.insert(q,{IdNum=tostring(f),AbilityId=_:GetAttribute("\x41\x62\x69\x6C\x69\x74\x79\x49\x64")})elseif d then if _:GetAttribute("\x41\x62\x69\x6C\x69\x74\x79\x49\x64")~="\x33"then if b~=3 and _:GetAttribute("\x41\x62\x69\x6C\x69\x74\x79\x49\x64")~="\x32\x33\x39"then table.insert(p,{IdNum=tostring(f),AbilityId=_:GetAttribute("\x41\x62\x69\x6C\x69\x74\x79\x49\x64")})else b=1 end else n=tostring(f) c=true end end if tostring(a)==_.Name then d=true end end end function HasSickle()local _,_=y:Invoke(ca) for _,_ in pairs(_)do if _.Id and _.Id=="\x31\x32\x30"then z=true end end end function NextWeaponAvailable()local a=0 local b for _,c in pairs(u:GetChildren())do if c:IsA("\x46\x72\x61\x6D\x65")and c.Visible and c:FindFirstChild("\x57\x65\x61\x70\x6F\x6E\x42\x75\x74\x74\x6F\x6E")and c.WeaponButton.Visible then for _,_ in pairs(c.WeaponButton:GetChildren())do if _.Name=="\x42\x67\x4F\x75\x74\x4C\x69\x6E\x65"and _.Visible then if a<c.WeaponButton.AbilityFillMask.Size.Y.Scale then a=c.WeaponButton.AbilityFillMask.Size.Y.Scale b=c end end end end end return b end function NextWeaponUltimate()local _=0 local _ for _,a in pairs(u:GetChildren())do if a:IsA("\x46\x72\x61\x6D\x65")and a.Visible and a:FindFirstChild("\x57\x65\x61\x70\x6F\x6E\x42\x75\x74\x74\x6F\x6E")and a.WeaponButton.Visible then for _,_ in pairs(a.WeaponButton:GetChildren())do if a.WeaponButton.AbilityFillMask.Size.Y.Scale==1 then local _=a:FindFirstChild("\x57\x65\x61\x70\x6F\x6E\x49\x63\x6F\x6E",true) if not G and _ and _.Image==j["\x31\x32\x30"].BattleIcon then continue end return a end end end end end function SwitchWeapon()if S then return end local _=NextWeaponAvailable() if _ then if _.KeyImg.Image==b then PressButton("\x4F\x6E\x65")elseif _.KeyImg.Image==m then PressButton("\x54\x77\x6F")end end end function GetGameplayAbilitySpecContainer()for _,_ in pairs(getgc(true))do if type(_)=="\x74\x61\x62\x6C\x65"and rawget(_,"\x47\x61\x6D\x65\x70\x6C\x61\x79\x41\x62\x69\x6C\x69\x74\x79\x53\x70\x65\x63\x43\x6F\x6E\x74\x61\x69\x6E\x65\x72")then f=_.GameplayAbilitySpecContainer break end end end function Simulate()if S then return end S=true local _,b=s:GetCreatureObjectByModel(ca.Character) local _,a=Z:Invoke(ca,D) local _,_=Z:Invoke(ca,e) local _,_=Z:Invoke(ca,l) local _,_=Z:Invoke(ca,k) local _,_=t:GetAbilitySystemComponentByOnwer(b.Id) if V or GetSettingsValue("\x41\x75\x74\x6F\x46\x61\x72\x6D")then game:GetService("\x52\x65\x70\x6C\x69\x63\x61\x74\x65\x64\x53\x74\x6F\x72\x61\x67\x65").GameplayAbilitySystem.Remote.ClientApplyServerActivateGA:InvokeServer(b.Id,a,{})end if F or GetSettingsValue("\x41\x75\x74\x6F\x46\x61\x72\x6D")then for _,_ in pairs(q)do if game:GetService("\x52\x65\x70\x6C\x69\x63\x61\x74\x65\x64\x53\x74\x6F\x72\x61\x67\x65").GameplayAbilitySystem.Remote.ClientApplyServerActivateGA:InvokeServer(b.Id,_.IdNum,{})==_a.SUCCEEDED then WaitUsingConfig(_.AbilityId)end end if V or GetSettingsValue("\x41\x75\x74\x6F\x46\x61\x72\x6D")then game:GetService("\x52\x65\x70\x6C\x69\x63\x61\x74\x65\x64\x53\x74\x6F\x72\x61\x67\x65").GameplayAbilitySystem.Remote.ClientApplyServerActivateGA:InvokeServer(b.Id,a,{})end for _,_ in pairs(p)do if game:GetService("\x52\x65\x70\x6C\x69\x63\x61\x74\x65\x64\x53\x74\x6F\x72\x61\x67\x65").GameplayAbilitySystem.Remote.ClientApplyServerActivateGA:InvokeServer(b.Id,_.IdNum,{})==_a.SUCCEEDED then WaitUsingConfig(_.AbilityId)end end end if V or GetSettingsValue("\x41\x75\x74\x6F\x46\x61\x72\x6D")then game:GetService("\x52\x65\x70\x6C\x69\x63\x61\x74\x65\x64\x53\x74\x6F\x72\x61\x67\x65").GameplayAbilitySystem.Remote.ClientApplyServerActivateGA:InvokeServer(b.Id,a,{})end S=false end function GetBuffs()for _,c in pairs(getgc(true))do if type(c)=="\x74\x61\x62\x6C\x65"and rawget(c,"\x50\x72\x65\x64\x69\x63\x74\x69\x6F\x6E\x4B\x65\x79")then local _=c.GetSpecHandle local b=c.GetIsActive local a=c.GetOnwer if a and not X.OwnerId then X.OwnerId=c:GetOnwer()end if _ and c.PredictionKey~=0 and b and c:GetIsActive()then local _=c:GetSpecHandle() if _~="\x30"then table.insert(X,{Spec=_,Key=c.PredictionKey,Id=c.Id})end end end end end function UseBuffs()if I then return end I=true local _=ca.PlayerGui.MainGui.LocalPlayerInfoFrame.PlayerHPArea.VirtualFillMask local b=0 local a=_.Size local _,_=h:Invoke(ca) if a.X.Scale>=0.45 and z and not G and not B then B=true spawn(function()wait(0.45) B=false end) b=1 end for _,_ in pairs(X)do if _.Id=="\x33\x37\x38"or(_.Id and tonumber(_.Id)>60 and tonumber(_.Id)<70)then b=0 end game:GetService("\x52\x65\x70\x6C\x69\x63\x61\x74\x65\x64\x53\x74\x6F\x72\x61\x67\x65").GameplayAbilitySystem.Remote.ServerActivateGameplayEffect:FireServer(X.OwnerId,{},_.Spec,_.Key,b)end spawn(function()wait(x) I=false end)end function Click()Y=Vector2.new(workspace.CurrentCamera.ViewportSize.X/2,workspace.CurrentCamera.ViewportSize.Y/2) R:SendMouseButtonEvent(Y.X,Y.Y,0,true,workspace,0) wait() R:SendMouseButtonEvent(Y.X,Y.Y,0,false,workspace,0)end function PressButton(_)R:SendKeyEvent(true,_,false,game) R:SendKeyEvent(false,_,false,game)end function FindReadyAbility()for _,_ in pairs(N:GetChildren())do if _:IsA("\x49\x6D\x61\x67\x65\x42\x75\x74\x74\x6F\x6E")and _.Visible and not _.Mask.Visible then return _ end end return nil end function AddAbilitiesToList()for _,_ in pairs(N:GetChildren())do if _:IsA("\x49\x6D\x61\x67\x65\x42\x75\x74\x74\x6F\x6E")and _.Visible then if _.KeyBGImg.Image==J then table.insert(U,{Key="\x51",Button=_})elseif _.KeyBGImg.Image==E then table.insert(U,{Key="\x45",Button=_})elseif _.KeyBGImg.Image==A then table.insert(U,{Key="\x52",Button=_})end end end end function CheckIfAbilityIsReady(a)for _,_ in pairs(N:GetChildren())do if _:IsA("\x49\x6D\x61\x67\x65\x42\x75\x74\x74\x6F\x6E")and _.Visible and not _.Mask.Visible then if _.KeyBGImg.Image==J and a=="\x51"then return true elseif _.KeyBGImg.Image==E and a=="\x45"then return true elseif _.KeyBGImg.Image==A and a=="\x52"then return true end end end end function ActivateSpecficAbility(a)for _,_ in pairs(U)do if _.Key==a and not _.Button.Mask.Visible then PressButton(a)end end end function ActivateAbilities()local _=FindReadyAbility() if _ then local _=_.KeyBGImg.Image if _==J then PressButton("\x51")elseif _==E then PressButton("\x45")elseif _==A then PressButton("\x52")end return true end end function NearestMap(_)local d=ca.Character.HumanoidRootPart if _ then d=_:FindFirstChild("\x48\x75\x6D\x61\x6E\x6F\x69\x64\x52\x6F\x6F\x74\x50\x61\x72\x74",true)end local b local c=math.huge if not d then return b end for _,_ in pairs(aa:GetChildren())do local a=(d.Position-_.WorldPivot.Position).Magnitude if a<c then b=_ c=a end end if _ then local a=workspace.Recycle local _=(d.Position-a.WorldPivot.Position).Magnitude if _<c then b=a c=_ end end return b end function AddHowManyWeapons()local _,_=y:Invoke(ca) a=_ if _["\x33"]then O=3 elseif _["\x32"]then O=2 end end function SwitchWeaponUsingImage()PressButton(_)end function FindNearestAction()local a=math.huge local b for _,_ in pairs(i:GetChildren())do if _:GetAttribute("\x53\x70\x61\x77\x6E\x50\x6F\x69\x6E\x74\x4E\x61\x6D\x65")or(_:GetAttribute("\x4D\x6F\x6E\x73\x74\x65\x72\x49\x64")and _:GetAttribute("\x4D\x6F\x6E\x73\x74\x65\x72\x49\x64")=="\x36\x30")then if _:GetAttribute("\x4D\x6F\x6E\x73\x74\x65\x72\x49\x64")and _:GetAttribute("\x4D\x6F\x6E\x73\x74\x65\x72\x49\x64")=="\x36\x30"then M=true end local c=_ local _=c:FindFirstChildWhichIsA("\x4D\x6F\x64\x65\x6C") if not _ then continue end if _:GetAttribute("\x43\x75\x72\x72\x41\x6E\x69\x6D\x65\x53\x74\x61\x74\x65\x4E\x61\x6D\x65")and(_:GetAttribute("\x43\x75\x72\x72\x41\x6E\x69\x6D\x65\x53\x74\x61\x74\x65\x4E\x61\x6D\x65")=="\x44\x65\x61\x74\x68"or _:GetAttribute("\x43\x75\x72\x72\x41\x6E\x69\x6D\x65\x53\x74\x61\x74\x65\x4E\x61\x6D\x65")=="")then continue end local _=c:FindFirstChild("\x48\x75\x6D\x61\x6E\x6F\x69\x64\x52\x6F\x6F\x74\x50\x61\x72\x74",true) if not _ then continue end local _=(ca.Character.HumanoidRootPart.Position-_.Position).magnitude if _<a then a=_ b=c end end end return b end function waitforattack()local _,_=s:GetCreatureObjectByModel(ca.Character) local _,a=t:GetAbilitySystemComponentByOnwer(_.Id) local _,_=Z:Invoke(ca,D) if a:TryActivateAbility(_,{})~=_a.SUCCEEDED then repeat wait()until a:TryActivateAbility(_,{})==_a.SUCCEEDED end end function FindEnemiesV2()local a=ca.Character.HumanoidRootPart local _=CheckForSafePads() if _ then W.Position=_.Position return end local c=FindNearestAction() if not c then return end local b=c:FindFirstChild("\x48\x75\x6D\x61\x6E\x6F\x69\x64\x52\x6F\x6F\x74\x50\x61\x72\x74",true) if not b then return end local _=c:GetExtentsSize() local _=c.WorldPivot.p.Y-(_.Y/2) local _=(CFrame.new(b.Position.X,_,b.Position.Z)*CFrame.new(0,-9.5,0)).Position W.Position=_ Q.CFrame=CFrame.new(a.Position,Vector3.new(0,100000,0)) Q.Parent=a W.Parent=a spawn(function()Simulate()end)end function ChangeDash()for _,_ in pairs(getgc(true))do if type(_)=="\x74\x61\x62\x6C\x65"and rawget(_,"\x44\x69\x73\x74\x61\x6E\x63\x65")and rawget(_,"\x44\x75\x72\x61\x74\x69\x6F\x6E")and rawget(_,"\x54\x69\x6D\x65")then _.Duration=50 _.Distance=1 end end end function CheckIfItsABuffRoom(a)if r or C then return false end C=true spawn(function()wait(2) C=false end) for _,_ in pairs(getgc(true))do if type(_)=="\x74\x61\x62\x6C\x65"and rawget(_,"\x55\x73\x65\x4D\x6F\x64\x65\x6C")and rawget(_,"\x49\x73\x41\x63\x74\x69\x76\x61\x74\x65\x64")and(_.IsCompleted)~=nil then if not _.IsCompleted and _.NodeIndex==a then local _=_.UseModel if _ then r=true if _.Name:find("\x42\x75\x66\x66")then return true else return false end end end end end return false end function CheckCurrentStage()if GetSettingsValue("\x53\x6B\x69\x70\x4C\x61\x73\x74\x42\x6F\x73\x73")then local _=tonumber(d.Text:match("\x25\x64\x2B")) local a=tonumber(c.Text:match("\x25\x64\x2B")) if(a==_)or(a==_-1 and CheckIfItsABuffRoom(a))then ca.Character.Humanoid.Health=0 end end end function PrioritizeIcons()local a={} for _,_ in pairs(ba)do a[_.Priority]=_ end return a end function ClearGuidance()local _=aa:FindFirstChild("\x47\x75\x69\x64\x61\x6E\x63\x65",true) repeat wait() if _ then _:Destroy()end _=aa:FindFirstChild("\x47\x75\x69\x64\x61\x6E\x63\x65",true)until not _ end function FindDoor()local _=aa:FindFirstChild("\x47\x75\x69\x64\x61\x6E\x63\x65",true) if not _ then return end local c={} local a=_:FindFirstAncestor("\x56\x6F\x74\x65\x44\x6F\x6F\x72") local b if a then for _,b in pairs(a:GetChildren())do local _=b:FindFirstChild("\x49\x63\x6F\x6E\x49\x6D\x61\x67\x65",true) if _ then table.insert(c,{VoteDoor=a,DoorModel=b,Door=b:FindFirstChildWhichIsA("\x54\x6F\x75\x63\x68\x54\x72\x61\x6E\x73\x6D\x69\x74\x74\x65\x72",true).Parent,Image=_.Image,DoorNumber=b})end end end for _,a in pairs(PrioritizeIcons())do for _,_ in pairs(c)do if _.Image==a.Image then b=_ break end end if b then break end end if#c>0 and not b then b=c[1]end return b end function DestroyOtherDoors(_,a)for _,_ in pairs(_:GetChildren())do if _~=a then _:Destroy()end end end function NextMapUsingInstance()local b=FindDoor() if not b then return end local _=b.VoteDoor local a=b.Door local b=b.DoorModel DestroyOtherDoors(_,b) repeat wait() W.Position=a.Position until not b:FindFirstChild("\x47\x75\x69\x64\x61\x6E\x63\x65",true)end function NextMapUsingRemote()local _=FindDoor() if not _ then return end local _=_.DoorNumber local c=_.Name if c=="\x31"then c="\x33"elseif c=="\x33"then c="\x31"end if v:InvokeServer(tonumber(c))~=_a.SUCCEEDED then local _ local a=false local b=false repeat wait(0.1) if c=="\x31"and not b then c="\x33" a=true elseif c=="\x32"then c="\x31"elseif c=="\x33"and not a then c="\x31" b=true end if b and a then if c=="\x31"then c="\x32"elseif c=="\x32"then c="\x33"elseif c=="\x33"then c="\x31"end end _=v:InvokeServer(tonumber(c))until _==_a.SUCCEEDED end ClearGuidance()end queue_on_teleport(game:HttpGet("\x68\x74\x74\x70\x73\x3A\x2F\x2F\x72\x61\x77\x2E\x67\x69\x74\x68\x75\x62\x75\x73\x65\x72\x63\x6F\x6E\x74\x65\x6E\x74\x2E\x63\x6F\x6D\x2F\x48\x69\x64\x6F\x50\x48\x2F\x74\x65\x73\x74\x2F\x72\x65\x66\x73\x2F\x68\x65\x61\x64\x73\x2F\x6D\x61\x69\x6E\x2F\x48\x75\x6E\x74",true)) game:GetService("\x52\x65\x70\x6C\x69\x63\x61\x74\x65\x64\x53\x74\x6F\x72\x61\x67\x65").Dungeon.Remote.DungeonFailed.OnClientEvent:connect(function()K=true if GetSettingsValue("\x41\x75\x74\x6F\x46\x61\x72\x6D")then game:GetService("\x52\x65\x70\x6C\x69\x63\x61\x74\x65\x64\x53\x74\x6F\x72\x61\x67\x65").Dungeon.Remote.RequestReplayDungeon:InvokeServer()end end) game:GetService("\x52\x65\x70\x6C\x69\x63\x61\x74\x65\x64\x53\x74\x6F\x72\x61\x67\x65").Dungeon.Remote.DungeonSucceeded.OnClientEvent:connect(function()K=true if GetSettingsValue("\x41\x75\x74\x6F\x46\x61\x72\x6D")then game:GetService("\x52\x65\x70\x6C\x69\x63\x61\x74\x65\x64\x53\x74\x6F\x72\x61\x67\x65").Dungeon.Remote.RequestReplayDungeon:InvokeServer()end end) AddHowManyWeapons() GetSkills() if O>1 then P=tick()else P=P+100000000000 end game:GetService("\x53\x74\x61\x72\x74\x65\x72\x47\x75\x69"):SetCore("\x53\x65\x6E\x64\x4E\x6F\x74\x69\x66\x69\x63\x61\x74\x69\x6F\x6E",{Title="\x44\x48\x20\x56\x20"..o,Text="\x41\x75\x74\x6F\x66\x61\x72\x6D\x20\x4C\x6F\x61\x64\x65\x64"}) function CheckFPS()if GetSettingsValue("\x46\x50\x53\x43\x61\x70")then if workspace:GetRealPhysicsFPS()>GetSettingsValue("\x46\x50\x53\x56\x61\x6C\x75\x65")+1 then setfpscap(GetSettingsValue("\x46\x50\x53\x56\x61\x6C\x75\x65"))end end end function CheckForSafePads()if w then return end local _=workspace.Obstacle:FindFirstChild("\x53\x61\x66\x65\x50\x61\x72\x74",true) if _ and _.Transparency~=1 then return _ end end function WaitUsingConfig(a)local _=g[a].Parameter local b=_.Time or 0 if GetSettingsValue("\x55\x73\x65\x43\x75\x73\x74\x6F\x6D\x57\x61\x69\x74\x54\x69\x6D\x65")and GetSettingsValue("\x43\x75\x73\x74\x6F\x6D\x57\x61\x69\x74\x54\x69\x6D\x65")then if a~="\x32\x33\x34"then local _=GetSettingsValue("\x43\x75\x73\x74\x6F\x6D\x57\x61\x69\x74\x54\x69\x6D\x65")*1000 if b>_ then b=_ end else task.wait(1.75) return end end task.wait(b/1000)end if _G.manualexecute then ChangeSettings("\x41\x75\x74\x6F\x46\x61\x72\x6D",false)end function RunRepeat()if L then return end L=true repeat wait() if GetSettingsValue("\x41\x75\x74\x6F\x46\x61\x72\x6D")then CheckFPS() CheckCurrentStage() FindEnemiesV2() if M then M=false else NextMapUsingInstance()end end if H or GetSettingsValue("\x41\x75\x74\x6F\x46\x61\x72\x6D")then UseBuffs()end if not GetSettingsValue("\x41\x75\x74\x6F\x46\x61\x72\x6D")then spawn(function()Simulate()end)end until K or(not F and not V and not GetSettingsValue("\x41\x75\x74\x6F\x46\x61\x72\x6D")and not H) L=false end function RemoveWalls()for _,a in pairs(aa:GetChildren())do local _=a:FindFirstChild("\x4C\x61\x79\x6F\x75\x74",true) local a=a:FindFirstChild("\x47\x72\x6F\x75\x6E\x64",true) if _ then _:Destroy()end if a then a:Destroy()end end for _,_ in pairs(aa:GetDescendants())do if _:IsA("\x42\x61\x73\x65\x50\x61\x72\x74")then _.CanCollide=false end end aa.DescendantAdded:connect(function(_)if _:IsA("\x42\x61\x73\x65\x50\x61\x72\x74")then _.CanCollide=false end end)end function RunAutoFarm()if GetSettingsValue("\x41\x75\x74\x6F\x46\x61\x72\x6D")then ChangeDash() if T:FindFirstChild("\x42\x6F\x64\x79\x56\x65\x6C\x6F\x63\x69\x74\x79")then T:FindFirstChild("\x42\x6F\x64\x79\x56\x65\x6C\x6F\x63\x69\x74\x79"):Destroy()end if T:FindFirstChild("\x42\x6F\x64\x79\x47\x79\x72\x6F")then T:FindFirstChild("\x42\x6F\x64\x79\x47\x79\x72\x6F"):Destroy()end ca.Character.Humanoid.PlatformStand=true RemoveWalls() RunRepeat()end end HasSickle() GetBuffs() RefreshVotingLabels() RefreshSettings() RunAutoFarm()
+if game.PlaceId == 120217704230083 then
+	return
+end
+repeat wait() until game:IsLoaded()
+local version = 3.173
+local library = loadstring(game:HttpGet(('https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wall%20v3')))()
+local savefilename = "DungeonHuntersSettings.txt"
+local fileexist =  isfile(savefilename) 
+local window = library:CreateWindow("Dungeon Hunters") 
+local CheatsFolder = window:CreateFolder("Cheats")
+local AutoFarmFolder = window:CreateFolder("Auto Farm") 
+local AutoFarmSettingsFolder = window:CreateFolder("Auto Farm Settings") 
+local AutoFarmVotingSettingsFolder = window:CreateFolder("Voting Settings") 
+local VersionFolder = window:CreateFolder("Version")
+VersionFolder:Label(version,{
+	TextSize = 25; 
+	TextColor = Color3.fromRGB(255,255,255); 
+	BgColor = Color3.fromRGB(69,69,69); 
+})
+local SpeedSpoofEnabled = false
+local SpeedENabled = false
+local duration = 0
+local distance =0
+local buffscd = false
+local buffsuse = false
+local autoattack = false
+local ignoresafepads = false
+local weapondata = {}
+local disableautojoin = false
+local autoskills = false
+local disablesickleeffect = false
+local finishedmap = false
+local buffwaittime = 0.2
+local runningrepeat = false
+local Settings = {
+	SkipLastBoss = false,
+	FPSCap = false,
+	FPSValue = 60,
+	AutoFarm = false,
+	UseCustomWaitTime = false,
+	CustomWaitTime = 0.85
+}
+local imageiconlist = {
+	{Name = "Diamond", Image = "rbxassetid://78595425804517" , Priority = 1},
+	{Name = "XP", Image = "rbxassetid://83651165885079" , Priority = 2},
+	{Name = "Shard", Image = "rbxassetid://73998093799216", Priority = 3},
+	{Name = "Armor", Image = "rbxassetid://133047334988767", Priority = 4},
+	{Name = "Power",Image = "rbxassetid://91256924339386", Priority = 5},
+	{Name = "Health",Image = "rbxassetid://122846161635619", Priority = 6}
+}
+local settingsfromfile = (fileexist and game:service'HttpService':JSONDecode(readfile(savefilename))) or Settings
+local SkipLastBossLabel
+local SetFPSCapLabel
+local AutoFarmRunnningLabel
+local FPSValueLabel
+local WaitTimeLabel
+local UseWaitTimeLabel
+AutoFarmSettingsFolder:Toggle("Disable Auto Rejoin",function(bool)
+	disableautojoin = bool
+end)
+AutoFarmSettingsFolder:Slider("FPS Cap",{
+	min = 15; -- min value of the slider
+	max = 240; -- max value of the slider
+	precise = false; -- max 2 decimals
+},function(value)
+	ChangeSettings("FPSValue",value)
+	RefreshSettings()
+end)
+FPSValueLabel = AutoFarmSettingsFolder:Label("60",{
+	TextSize = 25; 
+	TextColor = Color3.fromRGB(255,255,255); 
+	BgColor = Color3.fromRGB(69,69,69); 
+})
+
+AutoFarmFolder:Button("Run Autofarm",function()
+	ChangeSettings("AutoFarm",not GetSettingsValue("AutoFarm"))
+	RefreshSettings()
+	RunAutoFarm()
+end)
+AutoFarmRunnningLabel = AutoFarmFolder:Label("true",{
+	TextSize = 25; 
+	TextColor = Color3.fromRGB(255,255,255); 
+	BgColor = Color3.fromRGB(69,69,69); 
+})
+AutoFarmSettingsFolder:Button("Skip Last Boss",function()
+	ChangeSettings("SkipLastBoss",not GetSettingsValue("SkipLastBoss"))
+	RefreshSettings()
+end)
+SkipLastBossLabel = AutoFarmSettingsFolder:Label("true",{
+	TextSize = 25; 
+	TextColor = Color3.fromRGB(255,255,255); 
+	BgColor = Color3.fromRGB(69,69,69); 
+})
+AutoFarmSettingsFolder:Button("Set FPS Cap",function()
+	ChangeSettings("FPSCap",not GetSettingsValue("FPSCap"))
+	RefreshSettings()
+end)
+SetFPSCapLabel = AutoFarmSettingsFolder:Label("true",{
+	TextSize = 25; 
+	TextColor = Color3.fromRGB(255,255,255); 
+	BgColor = Color3.fromRGB(69,69,69); 
+})
+
+AutoFarmSettingsFolder:Button("Use Custom Wait Time",function()
+	ChangeSettings("UseCustomWaitTime",not GetSettingsValue("UseCustomWaitTime"))
+	RefreshSettings()
+end)
+UseWaitTimeLabel = AutoFarmSettingsFolder:Label("false",{
+	TextSize = 25; 
+	TextColor = Color3.fromRGB(255,255,255); 
+	BgColor = Color3.fromRGB(69,69,69); 
+})
+AutoFarmSettingsFolder:Slider("Skills Wait Time",{
+	min = 0.1; -- min value of the slider
+	max = 3; -- max value of the slider
+	precise = true; -- max 2 decimals
+},function(value)
+	ChangeSettings("CustomWaitTime",value)
+	RefreshSettings()
+end)
+WaitTimeLabel = AutoFarmSettingsFolder:Label("0",{
+	TextSize = 25; 
+	TextColor = Color3.fromRGB(255,255,255); 
+	BgColor = Color3.fromRGB(69,69,69); 
+})
+
+
+local ItemsForVoting = {}
+for i,v in pairs(imageiconlist) do
+	table.insert(ItemsForVoting,v.Name)
+end
+local OneDropdown = AutoFarmVotingSettingsFolder:Dropdown("1",ItemsForVoting,false,function(name) --true/false, replaces the current title "Dropdown" with the option that t
+	ChangePriority(1,name)
+end)
+local OneLabel = AutoFarmVotingSettingsFolder:Label("1",{
+	TextSize = 25; 
+	TextColor = Color3.fromRGB(255,255,255); 
+	BgColor = Color3.fromRGB(69,69,69); 
+})
+
+local TwoDropdown =AutoFarmVotingSettingsFolder:Dropdown("2",ItemsForVoting,false,function(name) --true/false, replaces the current title "Dropdown" with the option that t
+	ChangePriority(2,name)
+end)
+local TwoLabel = AutoFarmVotingSettingsFolder:Label("2",{
+	TextSize = 25; 
+	TextColor = Color3.fromRGB(255,255,255); 
+	BgColor = Color3.fromRGB(69,69,69); 
+})
+
+local ThreeDropdown =AutoFarmVotingSettingsFolder:Dropdown("3",ItemsForVoting,false,function(name) --true/false, replaces the current title "Dropdown" with the option that t
+	ChangePriority(3,name)
+end)
+local ThreeLabel = AutoFarmVotingSettingsFolder:Label("3",{
+	TextSize = 25; 
+	TextColor = Color3.fromRGB(255,255,255); 
+	BgColor = Color3.fromRGB(69,69,69); 
+})
+
+local FourDropdown =AutoFarmVotingSettingsFolder:Dropdown("4",ItemsForVoting,false,function(name) --true/false, replaces the current title "Dropdown" with the option that t
+	ChangePriority(4,name)
+end)
+local FourLabel = AutoFarmVotingSettingsFolder:Label("4",{
+	TextSize = 25; 
+	TextColor = Color3.fromRGB(255,255,255); 
+	BgColor = Color3.fromRGB(69,69,69); 
+})
+local FiveDropdown =AutoFarmVotingSettingsFolder:Dropdown("5",ItemsForVoting,false,function(name) --true/false, replaces the current title "Dropdown" with the option that t
+	ChangePriority(5,name)
+end)
+local FiveLabel = AutoFarmVotingSettingsFolder:Label("5",{
+	TextSize = 25; 
+	TextColor = Color3.fromRGB(255,255,255); 
+	BgColor = Color3.fromRGB(69,69,69); 
+})
+CheatsFolder:Toggle("Auto Attack",function(bool)
+	autoattack = bool
+	spawn(function()
+		RunRepeat()
+	end)
+	Speed()
+end)
+CheatsFolder:Toggle("Auto Skills",function(bool)
+	autoskills = bool
+	spawn(function()
+		RunRepeat()
+	end)
+	Speed()
+end)
+
+CheatsFolder:Toggle("Attack No Slow",function(bool)
+	SpeedENabled = bool
+	Speed()
+end)
+CheatsFolder:Toggle("Long Dash",function(bool)
+	if bool then
+		for i,v in pairs(getgc(true)) do
+			if type(v) == "table" and rawget(v,"Distance") and rawget(v,"Duration") and rawget(v,"Time") then
+				if distance == 0 then
+					distance = v.Distance
+				end
+				if duration == 0 then
+					duration = v.Duration
+				end
+				v.Duration = 250
+				v.Distance = 40
+			end
+		end
+	else
+		for i,v in pairs(getgc(true)) do
+			if type(v) == "table" and rawget(v,"Distance") and rawget(v,"Duration") and rawget(v,"Time") then
+				v.Duration = duration
+				v.Distance = distance
+			end
+		end
+	end
+end)
+CheatsFolder:Toggle("Auto Use Buffs",function(bool)
+	buffsuse = bool
+	spawn(function()
+		RunRepeat()
+	end)
+end)
+CheatsFolder:Slider("Buffs Wait Time",{
+	min = 0.10; -- min value of the slider
+	max = 2; -- max value of the slider
+	precise = true; -- max 2 decimals
+},function(value)
+	buffwaittime = value
+end)
+CheatsFolder:Toggle("Disable Sickle Spam Effect",function(bool)
+	disablesickleeffect = bool
+end)
+CheatsFolder:Toggle("Ignore Safe Pads",function(bool)
+	ignoresafepads = bool
+end)
+CheatsFolder:Button("Kill self and rejoin",function()
+	game:GetService("ReplicatedStorage").Dungeon.Remote.DungeonFailed.OnClientEvent:connect(function()
+		game:GetService("ReplicatedStorage").Dungeon.Remote.RequestReplayDungeon:InvokeServer()
+	end)
+	game.Players.LocalPlayer.Character.Humanoid.Health = 0
+end)
+function RefreshVotingLabels()
+	for i,v in pairs(imageiconlist) do
+		if v.Priority == 1 then
+			OneLabel:Refresh(v.Name)
+		elseif v.Priority == 2 then
+			TwoLabel:Refresh(v.Name)
+		elseif v.Priority == 3 then
+			ThreeLabel:Refresh(v.Name)
+		elseif v.Priority == 4 then
+			FourLabel:Refresh(v.Name)
+		elseif v.Priority == 5 then
+			FiveLabel:Refresh(v.Name)
+		end
+	end
+
+end
+
+function GetNameFromPriority(priority)
+	for i,v in pairs(imageiconlist) do
+		if v.Priority == priority then
+			return v.Name
+		end
+	end
+end
+function ChangeItemPriorityTo(name,priority)
+	for i,v in pairs(imageiconlist) do
+		if v.Name == name then
+			v.Priority = priority
+			break
+		end
+	end
+end
+function GetSettingsValue(settingname)
+	return Settings[settingname]
+end
+function ChangeSettings(settingname,setting)
+	Settings[settingname] = setting
+	SaveSettings()
+end
+function ChangePriority(priority,name)
+	for i,v in pairs(imageiconlist) do
+		if v.Name == name and v.Priority~=priority then
+			local currentname = GetNameFromPriority(priority)
+			ChangeItemPriorityTo(currentname,v.Priority)
+			ChangeItemPriorityTo(name,priority)
+		end
+	end
+	RefreshVotingLabels()
+	SaveSettings()
+end
+function RefreshSettings()
+	SkipLastBossLabel:Refresh(tostring(GetSettingsValue("SkipLastBoss")))
+	SetFPSCapLabel:Refresh(tostring(GetSettingsValue("FPSCap")))
+	AutoFarmRunnningLabel:Refresh(tostring(GetSettingsValue("AutoFarm")))
+	FPSValueLabel:Refresh(tostring(GetSettingsValue("FPSValue")))
+	WaitTimeLabel:Refresh(tostring(GetSettingsValue("CustomWaitTime")))
+	UseWaitTimeLabel:Refresh(tostring(GetSettingsValue("UseCustomWaitTime")))
+end
+function LoadPrioritiesFromFile()
+	if fileexist then
+		for i,v in pairs(imageiconlist) do
+			v.Priority = settingsfromfile[v.Name] or v.Priority
+		end
+	end
+end
+function LoadSettingsFromFile()
+	for i,v in pairs(Settings) do
+		Settings[i] = settingsfromfile[i] or Settings[i]
+	end
+end
+function SaveSettings()
+	for i,v in pairs(imageiconlist) do
+		Settings[v.Name] = v.Priority
+	end
+	writefile(savefilename,game:service'HttpService':JSONEncode(Settings))
+end
+function Speed()
+	if not SpeedSpoofEnabled then
+		SpeedSpoofEnabled = true
+		local setspeed = game.Players.LocalPlayer.Character.Humanoid.WalkSpeed~=0 and game.Players.LocalPlayer.Character.Humanoid.WalkSpeed or 22
+		local WalkSpeedSpoof = getgenv().WalkSpeedSpoof
+		local Disable = WalkSpeedSpoof and WalkSpeedSpoof.Disable
+		if Disable then
+			Disable()
+		end
+
+		local cloneref = cloneref or function(...)
+			return ...
+		end
+
+		local WalkSpeedSpoof = {}
+
+		local Players = cloneref(game:GetService("Players"))
+		if not Players.LocalPlayer then
+			Players:GetPropertyChangedSignal("LocalPlayer"):Wait()
+		end
+		local lp = cloneref(Players.LocalPlayer)
+
+		local split = string.split
+
+		local GetDebugIdHandler = Instance.new("BindableFunction")
+		local TempHumanoid = Instance.new("Humanoid")
+
+		local cachedhumanoids = {}
+
+		local CurrentHumanoid
+		local newindexhook
+		local indexhook
+
+		function GetDebugIdHandler.OnInvoke(obj: Instance): string
+			return obj:GetDebugId()
+		end
+
+		local function GetDebugId(obj: Instance): string
+			return GetDebugIdHandler:Invoke(obj)
+		end
+
+		local function GetWalkSpeed(obj: any): number
+			TempHumanoid.WalkSpeed = obj
+			return TempHumanoid.WalkSpeed
+		end
+
+		function cachedhumanoids:cacheHumanoid(DebugId: string,Humanoid: Humanoid)
+			cachedhumanoids[DebugId] = {
+				currentindex = indexhook(Humanoid,"WalkSpeed"),
+				lastnewindex = nil
+			}
+			return self[DebugId]
+		end
+
+		indexhook = hookmetamethod(game,"__index",function(self,index)
+			if not checkcaller() and typeof(self) == "Instance" then
+				if self:IsA("Humanoid") then
+					local DebugId = GetDebugId(self)
+					local cached = cachedhumanoids[DebugId]
+
+					if self:IsDescendantOf(lp.Character) or cached then
+						if type(index) == "string" then
+							local cleanindex = split(index,"\0")[1]
+
+							if cleanindex == "WalkSpeed" then
+								if not cached then
+									cached = cachedhumanoids:cacheHumanoid(DebugId,self)
+								end
+
+								if not (CurrentHumanoid and CurrentHumanoid:IsDescendantOf(game)) then
+									CurrentHumanoid = cloneref(self)
+								end
+
+								return cached.lastnewindex or cached.currentindex
+							end
+						end
+					end
+				end
+			end
+
+			return indexhook(self,index)
+		end)
+
+		newindexhook = hookmetamethod(game,"__newindex",function(self,index,newindex)
+			if not checkcaller() and typeof(self) == "Instance" then
+				if self:IsA("Humanoid") then
+					local DebugId = GetDebugId(self)
+					local cached = cachedhumanoids[DebugId]
+
+					if self:IsDescendantOf(lp.Character) or cached then
+						if type(index) == "string" then
+							local cleanindex = split(index,"\0")[1]
+
+							if cleanindex == "WalkSpeed" then
+								if not cached then
+									cached = cachedhumanoids:cacheHumanoid(DebugId,self)
+								end
+
+								if not (CurrentHumanoid and CurrentHumanoid:IsDescendantOf(game)) then
+									CurrentHumanoid = cloneref(self)
+								end
+								cached.lastnewindex = GetWalkSpeed(newindex)
+								return CurrentHumanoid.WalkSpeed
+							end
+						end
+					end
+				end
+			end
+
+			return newindexhook(self,index,newindex)
+		end)
+
+		function WalkSpeedSpoof:Disable()
+			WalkSpeedSpoof:RestoreWalkSpeed()
+			hookmetamethod(game,"__index",indexhook)
+			hookmetamethod(game,"__newindex",newindexhook)
+			GetDebugIdHandler:Destroy()
+			TempHumanoid:Destroy()
+			table.clear(WalkSpeedSpoof)
+			getgenv().WalkSpeedSpoof = nil
+		end
+
+		function WalkSpeedSpoof:GetHumanoid()
+			return CurrentHumanoid or (function()
+				local char = lp.Character
+				local Humanoid = char and char:FindFirstChildWhichIsA("Humanoid") or nil
+
+				if Humanoid then
+					cachedhumanoids:cacheHumanoid(Humanoid:GetDebugId(),Humanoid)
+					return cloneref(Humanoid)
+				end
+			end)()
+		end
+
+		function WalkSpeedSpoof:SetWalkSpeed(speed)
+			local Humanoid = WalkSpeedSpoof:GetHumanoid()
+
+			if Humanoid then
+				local connections = {}
+				local function AddConnectionsFromSignal(Signal)
+					for i,v in getconnections(Signal) do
+						if v.State then
+							v:Disable()
+							table.insert(connections,v)
+						end
+					end
+				end
+				AddConnectionsFromSignal(Humanoid.Changed)
+				AddConnectionsFromSignal(Humanoid:GetPropertyChangedSignal("WalkSpeed"))
+				Humanoid.WalkSpeed = speed
+				for i,v in connections do
+					v:Enable()
+				end
+			end
+		end
+
+		function WalkSpeedSpoof:RestoreWalkSpeed()
+			local Humanoid = WalkSpeedSpoof:GetHumanoid()
+
+			if Humanoid then
+				local cached = cachedhumanoids[Humanoid:GetDebugId()]
+
+				if cached then
+					WalkSpeedSpoof:SetWalkSpeed(cached.lastnewindex or cached.currentindex)
+				end
+			end
+		end
+
+		getgenv().WalkSpeedSpoof = WalkSpeedSpoof
+		game.Players.LocalPlayer.Character.Humanoid:GetPropertyChangedSignal("WalkSpeed"):Connect(function()
+			WalkSpeedSpoof:SetWalkSpeed(setspeed)
+		end)
+	end
+end
+
+LoadPrioritiesFromFile()
+LoadSettingsFromFile()
+
+local Player = game.Players.LocalPlayer
+if not Player.Character then
+	Player.CharacterAdded:wait()
+end
+repeat wait() until workspace:FindFirstChild("SandboxPlayFolder")
+repeat wait() until workspace:FindFirstChild("Creature")
+repeat wait() until workspace.Creature:FindFirstChild("Activation")
+repeat wait() until #workspace.Creature.Activation:GetChildren() > 4
+local SwitchWeaponCD = 3
+local Enemies = workspace.Creature.Activation
+local QImage = "rbxassetid://136888076810935"
+local EImage = "rbxassetid://126309108298486"
+local RImage = "rbxassetid://99880054362133"
+local EXPImage = "rbxassetid://83651165885079"
+local OneImage = "rbxassetid://108624533115005"
+local TwoImage = "rbxassetid://101513587621887"
+local ArmorImage = "rbxassetid://133047334988767"
+local BossImage = "rbxassetid://133129791622991"
+local DiamondImage = "rbxassetid://78595425804517"
+local PowerImage = "rbxassetid://91256924339386"
+local ErrorCode = require(game:GetService("ReplicatedStorage").Tools.Script.ErrorCode)
+local vim = game:GetService('VirtualInputManager')
+local GetWeaponData = game:GetService("ReplicatedStorage").EquipmentSystem.Bindable.GetWeaponData
+local castvote = game:GetService("ReplicatedStorage").Dungeon.Remote.ReqCastVote
+local vector = Vector2.new(workspace.CurrentCamera.ViewportSize.X / 2, workspace.CurrentCamera.ViewportSize.Y / 2)
+local Maps = workspace.SandboxPlayFolder
+local LP = game.Players.LocalPlayer
+local vu = game:GetService("VirtualUser")
+local WeaponsConfig = require(game:GetService("ReplicatedStorage").GameItem.Config.GameItemInfoConfig.Weapon)
+local EnumCode = require(game:GetService("ReplicatedStorage").Tools.Script.EnumCode)
+local GetPlayerHoldWeaponData = game:GetService("ReplicatedStorage").EquipmentSystem.Bindable.GetPlayerHoldWeaponData
+local GameplayEffectConfig = require(game:GetService("ReplicatedStorage").GameplayAbilitySystem.Config.GameplayEffectConfig)
+local CreatureControllerClient = require(game:GetService("ReplicatedStorage").Creature.Script.CreatureControllerClient)
+local RpgASCClientClass = require(game:GetService("ReplicatedStorage").GameplayAbilitySystem.Script.AbilitySystemComponentSubClassList.RpgASCClientClass)
+local GetAbilityBarInfo = game:GetService("ReplicatedStorage").AbilityBar.Bindable.GetAbilityBarInfo
+local MonsterRemainingCountChanged = game:GetService("ReplicatedStorage").Sandbox.Remote.MonsterRemainingCountChanged
+local TotalStagesText = game:GetService("Players").LocalPlayer.PlayerGui.StageProgressGui.ContentFrame.TopFrame.StageProgressaArea.StageNumText.TotalNumText
+local CurrentStageText = game:GetService("Players").LocalPlayer.PlayerGui.StageProgressGui.ContentFrame.TopFrame.StageProgressaArea.StageNumText.CurrNumText
+local monsterremaining = 10
+local GameplayAbilitySpecContainer
+local Skill1 = EnumCode.AbilityIndex.SkillOne
+local Skill2 = EnumCode.AbilityIndex.SkillTwo
+local cooldowncheck = false
+local alreadycheck = false
+local Skill3 = EnumCode.AbilityIndex.SkillThree
+local Attack = EnumCode.AbilityIndex.Attack
+local effectcd = false
+local Dash = EnumCode.AbilityIndex.Dash
+local SwitchCode = ""
+local skillspamlistcount = 1
+local enemy
+local cd = false
+local AbilitiesIcon = {}
+local hassickle = false
+local buffslist = {}
+local donttp = false
+local weapons = 1
+local lasttime = tick()
+local SkillsList = {}
+local SkillSpamList = {}
+local switchskillnum
+local chosenweapon = "One"
+
+LP.Idled:connect(function()
+	vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+	wait(1)
+	vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
+if not LP.PlayerGui:FindFirstChild("MainGui") then
+	repeat wait() until LP.PlayerGui:FindFirstChild("MainGui")
+end
+local Abilities = LP.PlayerGui.MainGui.BottomFrame.AbilityArea
+local Weapons = game:GetService("Players").LocalPlayer.PlayerGui.MainGui.BottomFrame.WeaponScrollView
+if not Player.Character:FindFirstChild("Humanoid") then
+	repeat wait() until LP.Character:FindFirstChild("Humanoid")
+end
+if not Player.Character:FindFirstChild("HumanoidRootPart") then
+	repeat wait() until LP.Character:FindFirstChild("HumanoidRootPart")
+end
+if LP.Character.HumanoidRootPart:FindFirstChild("BodyPosition") then
+	LP.Character.HumanoidRootPart:FindFirstChild("BodyPosition"):Destroy()
+end
+if LP.Character.HumanoidRootPart:FindFirstChild("BodyGyro") then
+	LP.Character.HumanoidRootPart:FindFirstChild("BodyGyro"):Destroy()
+end
+if not LP.Character:FindFirstChild("GameplayAbilityList",true) then
+	repeat wait() until LP.Character:FindFirstChild("GameplayAbilityList",true)
+end
+
+local T = LP.Character.HumanoidRootPart
+local BP = Instance.new("BodyPosition")
+local BG = Instance.new("BodyGyro")
+BG.P = 9e4
+BG.maxTorque = Vector3.new(9e9, 9e9, 9e9)
+BP.MaxForce = Vector3.new(9e9, 9e9, 9e9)
+BP.P = 999999
+
+function GetSkills()
+	local errorc2,attack = GetAbilityBarInfo:Invoke(LP,Attack)
+	local AbilityList = LP.Character:FindFirstChild("GameplayAbilityList",true)
+	local count = 1
+	local startadding = false
+	local startaddingspamskills =false
+	for i,v in pairs(AbilityList:GetChildren()) do
+		local ability = AbilityList[tostring(i)]
+		if startaddingspamskills then
+			table.insert(SkillSpamList,{IdNum = tostring(i), AbilityId = ability:GetAttribute("AbilityId")})
+		elseif startadding then
+			if ability:GetAttribute("AbilityId") ~= "3" then
+				if count ~= 3 and ability:GetAttribute("AbilityId") ~= "239" then --239 Sickle ULT
+					table.insert(SkillsList,{IdNum = tostring(i), AbilityId = ability:GetAttribute("AbilityId")})
+					--count = count + 1
+				else
+					count = 1
+				end
+			else
+				switchskillnum = tostring(i)
+				startaddingspamskills = true
+			end
+		end
+		if tostring(attack) == ability.Name then
+			startadding = true
+		end
+	end
+end
+function HasSickle()
+	local code,data = GetWeaponData:Invoke(LP)
+	for i,v in pairs(data) do
+		if v.Id and v.Id == "120" then
+			hassickle = true
+		end
+	end
+end
+function NextWeaponAvailable()
+	local largest = 0
+	local weapon
+	for i,v in pairs(Weapons:GetChildren()) do
+		if v:IsA("Frame") and v.Visible and v:FindFirstChild("WeaponButton") and v.WeaponButton.Visible then
+			for a,b in pairs(v.WeaponButton:GetChildren()) do
+				if b.Name == "BgOutLine" and b.Visible then
+					if largest < v.WeaponButton.AbilityFillMask.Size.Y.Scale then
+						largest = v.WeaponButton.AbilityFillMask.Size.Y.Scale
+						weapon = v
+					end
+				end
+			end
+		end
+	end
+	return weapon
+end
+function NextWeaponUltimate()
+	local largest = 0
+	local weapon
+	for i,v in pairs(Weapons:GetChildren()) do
+		if v:IsA("Frame") and v.Visible and v:FindFirstChild("WeaponButton") and v.WeaponButton.Visible then
+			for a,b in pairs(v.WeaponButton:GetChildren()) do
+				if v.WeaponButton.AbilityFillMask.Size.Y.Scale == 1 then
+					local weaponicon = v:FindFirstChild("WeaponIcon",true)
+					if not disablesickleeffect and weaponicon and weaponicon.Image == WeaponsConfig["120"].BattleIcon then
+						continue
+					end
+					return v
+				end
+			end
+		end
+	end
+end
+function SwitchWeapon()
+	if cd then
+		return
+	end
+	local weapon = NextWeaponAvailable()
+	if weapon then
+		if weapon.KeyImg.Image == OneImage then
+			PressButton("One")
+		elseif weapon.KeyImg.Image == TwoImage then
+			PressButton("Two")
+		end
+	end
+end
+function GetGameplayAbilitySpecContainer()
+	for i,v in pairs(getgc(true)) do
+		if type(v) == "table" and rawget(v,"GameplayAbilitySpecContainer") then
+			GameplayAbilitySpecContainer = v.GameplayAbilitySpecContainer
+			break
+		end
+	end
+end
+function Simulate()
+	if cd then
+		return
+	end
+	cd= true
+	local errorc,idcode = CreatureControllerClient:GetCreatureObjectByModel(LP.Character)
+	local errorc2,attack = GetAbilityBarInfo:Invoke(LP,Attack)
+	local errorc3,skillone = GetAbilityBarInfo:Invoke(LP,Skill1)
+	local errorc4,skilltwo = GetAbilityBarInfo:Invoke(LP,Skill2)
+	local errorc5,skillthree = GetAbilityBarInfo:Invoke(LP,Skill3)
+	local errorc1, AbilitySystem = RpgASCClientClass:GetAbilitySystemComponentByOnwer(idcode.Id)
+	--[[
+	if (GetSettingsValue("AutoFarm") or autoattack) and tick() - lasttime >= SwitchWeaponCD and weapons > 1  then
+		local errorc3check,skillonecheck = GetAbilityBarInfo:Invoke(LP,Skill1)
+		local newskillone
+		local error4code
+		repeat wait()
+			SwitchWeaponUsingImage()
+			error4code, newskillone = GetAbilityBarInfo:Invoke(LP,Skill1)
+		until newskillone ~= skillonecheck
+		lasttime = tick()
+		if weapons > 2 then
+			if chosenweapon == "One" then
+				chosenweapon = "Two"
+			elseif chosenweapon == "Two" then
+				chosenweapon = "One"
+			end
+		end
+	end]]
+	if autoattack or (GetSettingsValue("AutoFarm") and enemy) then
+		game:GetService("ReplicatedStorage").GameplayAbilitySystem.Remote.ClientApplyServerActivateGA:InvokeServer(idcode.Id,attack,{})
+	end
+	--[[
+	local weapon = NextWeaponUltimate()
+	if weapon then
+		local errorc3check,skillonecheck = GetAbilityBarInfo:Invoke(LP,Skill1)
+		local newskillone
+		local error4code
+		repeat wait()
+			if weapon.KeyImg.Image == OneImage then
+				PressButton("One")
+			elseif weapon.KeyImg.Image == TwoImage then
+				PressButton("Two")
+			end
+			error4code, newskillone = GetAbilityBarInfo:Invoke(LP,Skill1)
+		until newskillone ~= skillonecheck
+		repeat wait()
+			PressButton("R")
+		until AbilitySystem:TryActivateAbility(attack,{}) ~= ErrorCode.SUCCEEDED
+		lasttime = tick()
+		waitforattack()
+	end
+	local coder,weaps = GetPlayerHoldWeaponData:Invoke(LP)
+	
+	if CheckIfAbilityIsReady("R") and ((GetSettingsValue("AutoFarm") or autoskills)) and (disablesickleeffect or (not disablesickleeffect and weaps.ItemId ~="120")) then
+		repeat wait()
+			PressButton("R")
+		until AbilitySystem:TryActivateAbility(attack,{}) ~= ErrorCode.SUCCEEDED
+		lasttime = tick()
+		waitforattack()
+	end
+
+
+	if CheckIfAbilityIsReady("R") and ((GetSettingsValue("AutoFarm") or autoskills)) then
+		repeat wait()
+			PressButton("R")
+		until AbilitySystem:TryActivateAbility(attack,{}) ~= ErrorCode.SUCCEEDED
+		lasttime = tick()
+		waitforattack()
+	end]]
+	--[[
+		local coder,weaps = GetPlayerHoldWeaponData:Invoke(LP)
+	if switchskillnum and weaps.SlotId~="1" then
+		game:GetService("ReplicatedStorage").GameplayAbilitySystem.Remote.ClientApplyServerActivateGA:InvokeServer(idcode.Id,switchskillnum,{TargetSlot = "1"})
+	end]]
+	if autoskills or (GetSettingsValue("AutoFarm") and enemy) then
+		for i,v in pairs(SkillSpamList) do
+			if game:GetService("ReplicatedStorage").GameplayAbilitySystem.Remote.ClientApplyServerActivateGA:InvokeServer(idcode.Id,v.IdNum,{}) == ErrorCode.SUCCEEDED then
+				WaitUsingConfig(v.AbilityId)
+			end
+		end
+		if autoattack or (GetSettingsValue("AutoFarm") and enemy) then
+			game:GetService("ReplicatedStorage").GameplayAbilitySystem.Remote.ClientApplyServerActivateGA:InvokeServer(idcode.Id,attack,{})
+		end
+		for i,v in pairs(SkillsList) do
+			if game:GetService("ReplicatedStorage").GameplayAbilitySystem.Remote.ClientApplyServerActivateGA:InvokeServer(idcode.Id,v.IdNum,{}) == ErrorCode.SUCCEEDED then
+				WaitUsingConfig(v.AbilityId)
+			end
+		end
+	end
+	if autoattack or (GetSettingsValue("AutoFarm") and enemy) then
+		game:GetService("ReplicatedStorage").GameplayAbilitySystem.Remote.ClientApplyServerActivateGA:InvokeServer(idcode.Id,attack,{})
+	end
+	--[[
+	--game:GetService("ReplicatedStorage").GameplayAbilitySystem.Remote.ClientApplyServerActivateGA:InvokeServer("10016","11",{})
+	if CheckIfAbilityIsReady("R") and (GetSettingsValue("AutoFarm") or autoskills) then
+		repeat wait()
+			PressButton("R")
+		until AbilitySystem:TryActivateAbility(attack,{}) ~= ErrorCode.SUCCEEDED
+		lasttime = tick()
+		waitforattack()
+	end]]
+	cd = false
+end
+
+function GetBuffs()
+	for i,v in pairs(getgc(true)) do
+		if type(v) == "table" and rawget(v,"PredictionKey") then
+			local t = v.GetSpecHandle
+			local g = v.GetIsActive
+			local go = v.GetOnwer
+			if go and not buffslist.OwnerId then
+				buffslist.OwnerId = v:GetOnwer()
+			end
+			if t and v.PredictionKey ~= 0 and g and v:GetIsActive() then
+				local spec = v:GetSpecHandle()
+				if spec~= "0" then
+					table.insert(buffslist,{Spec = spec,Key = v.PredictionKey, Id = v.Id})
+				end
+			end
+		end
+	end
+end
+function UseBuffs()
+	if buffscd then return end
+	buffscd = true
+	local mask = LP.PlayerGui.MainGui.LocalPlayerInfoFrame.PlayerHPArea.VirtualFillMask
+	local num = 1
+	local size = mask.Size
+
+	for i,v in pairs(buffslist) do
+		if v.Id and v.Id == "374" then
+			if size.X.Scale < 0.45 then
+				continue
+			else
+				if not disablesickleeffect then
+					if not effectcd and enemy then
+						effectcd = true
+						spawn(function()
+							wait(0.65)
+							effectcd = false
+						end)
+					else 
+						continue
+					end
+				end
+			end
+			--[[
+			if size.X.Scale >= 0.45 and not disablesickleeffect and not effectcd then
+				effectcd = true
+				spawn(function()
+					wait(0.65)
+					effectcd = false
+				end)
+			end]]
+		elseif v.Id and (v.Id == "378" or (tonumber(v.Id) >60 and tonumber(v.Id) < 70)) then
+			num = 0
+		end
+		game:GetService("ReplicatedStorage").GameplayAbilitySystem.Remote.ServerActivateGameplayEffect:FireServer(buffslist.OwnerId,{},v.Spec,v.Key,num)
+	end
+	spawn(function()
+		wait(buffwaittime)
+		buffscd = false
+	end)
+end
+function Click()
+	vector = Vector2.new(workspace.CurrentCamera.ViewportSize.X / 2, workspace.CurrentCamera.ViewportSize.Y / 2)
+	vim:SendMouseButtonEvent(vector.X,vector.Y,0,true,workspace,0)
+	wait()
+	vim:SendMouseButtonEvent(vector.X,vector.Y,0,false,workspace,0)
+end
+function PressButton(key)
+	vim:SendKeyEvent(true, key, false, game)
+	vim:SendKeyEvent(false, key, false, game)
+end
+function FindReadyAbility()
+	for i,v in pairs(Abilities:GetChildren()) do
+		if v:IsA("ImageButton") and v.Visible and not v.Mask.Visible then
+			return v
+		end
+	end
+	return nil
+end
+function AddAbilitiesToList()
+	for i,v in pairs(Abilities:GetChildren()) do
+		if v:IsA("ImageButton") and v.Visible then
+			if v.KeyBGImg.Image == QImage then
+				table.insert(AbilitiesIcon,{Key = "Q",Button = v})
+			elseif v.KeyBGImg.Image == EImage then
+				table.insert(AbilitiesIcon,{Key = "E",Button = v})
+			elseif v.KeyBGImg.Image == RImage then
+				table.insert(AbilitiesIcon,{Key = "R",Button = v})
+			end
+		end
+	end
+end
+
+function CheckIfAbilityIsReady(key)
+	--[[
+	for i,v in pairs(AbilitiesIcon) do
+		if v.Key == key and not v.Button.Mask.Visible then
+			return true
+		end
+	end]]
+	for i,v in pairs(Abilities:GetChildren()) do
+		if v:IsA("ImageButton") and v.Visible and not v.Mask.Visible then
+			if v.KeyBGImg.Image == QImage and key == "Q" then
+				return true
+			elseif v.KeyBGImg.Image == EImage and key == "E" then
+				return true
+			elseif v.KeyBGImg.Image == RImage and key == "R" then
+				return true
+			end
+		end
+	end
+
+end
+function ActivateSpecficAbility(key)
+	for i,v in pairs(AbilitiesIcon) do
+		if v.Key == key and not v.Button.Mask.Visible then
+			PressButton(key)
+		end
+	end
+end
+
+function ActivateAbilities()
+	local abilitybutton = FindReadyAbility()
+	if abilitybutton then
+		local keyimage = abilitybutton.KeyBGImg.Image
+		if keyimage == QImage then
+			PressButton("Q")
+		elseif keyimage == EImage then
+			PressButton("E")
+		elseif keyimage == RImage then
+			PressButton("R")
+		end
+		return true
+	end
+end
+
+function NearestMap(monster)
+	local HRT = LP.Character.HumanoidRootPart
+	if monster then
+		HRT = monster:FindFirstChild("HumanoidRootPart",true)
+	end
+	local nearest
+	local nearestdis = math.huge
+	if not HRT then
+		return nearest
+	end
+	for i,v in pairs(Maps:GetChildren()) do
+		local dis = (HRT.Position - v.WorldPivot.Position).Magnitude
+		if dis < nearestdis then
+			nearest = v
+			nearestdis = dis
+		end
+	end
+	if monster then
+		local recycle = workspace.Recycle
+		local dis = (HRT.Position - recycle.WorldPivot.Position).Magnitude
+		if dis < nearestdis then
+			nearest = recycle
+			nearestdis = dis
+		end
+	end
+	return nearest
+end
+
+function AddHowManyWeapons()
+	local code,data = GetWeaponData:Invoke(LP)
+	weapondata = data
+	if data["3"] then
+		weapons = 3 
+	elseif data["2"] then
+		weapons = 2
+	end
+end
+function SwitchWeaponUsingImage()
+	PressButton(chosenweapon)
+end
+function FindNearestAction()
+	local dist = math.huge
+	local nearest
+	for i,v in pairs(Enemies:GetChildren()) do
+		if v:GetAttribute("SpawnPointName") or (v:GetAttribute("MonsterId") and v:GetAttribute("MonsterId") == "60") then
+			if v:GetAttribute("MonsterId") and v:GetAttribute("MonsterId") == "60" then
+				donttp = true
+			end
+			if v:GetAttribute("IsDead") and v:GetAttribute("IsDead") == true then
+				continue
+			end
+			local monster = v
+			local model = monster:FindFirstChildWhichIsA("Model")
+			if not model then
+				continue
+			end
+			if model:GetAttribute("CurrAnimeStateName") and (model:GetAttribute("CurrAnimeStateName") == "Death" or model:GetAttribute("CurrAnimeStateName") == "") then
+				continue
+			end
+			local hrt = monster:FindFirstChild("HumanoidRootPart",true)
+			if not hrt then
+				continue
+			end
+			local dis = (LP.Character.HumanoidRootPart.Position - hrt.Position).magnitude
+			if dis < dist then
+				dist = dis
+				nearest = monster
+			end
+		end
+	end
+	return nearest
+end
+function waitforattack()
+	local errorc,idcode = CreatureControllerClient:GetCreatureObjectByModel(LP.Character)
+	local errorc1,AbilitySystem = RpgASCClientClass:GetAbilitySystemComponentByOnwer(idcode.Id)
+	local errorc1,attack = GetAbilityBarInfo:Invoke(LP,Attack)
+	if AbilitySystem:TryActivateAbility(attack,{}) ~= ErrorCode.SUCCEEDED then
+		repeat wait() until AbilitySystem:TryActivateAbility(attack,{}) == ErrorCode.SUCCEEDED
+	end
+end
+function FindEnemiesV2()
+	local myhrt = LP.Character.HumanoidRootPart
+	local safepart= CheckForSafePads()
+	if safepart then
+		BP.Position = safepart.Position
+		return
+	end
+	local monster = FindNearestAction()
+	if not monster then
+		return
+	end
+	local hrt = monster:FindFirstChild("HumanoidRootPart",true)
+	if not hrt then
+		return
+	end
+
+	--[[
+	local Size = monster:GetExtentsSize()
+	local GroundPos = monster.WorldPivot.p.Y - (Size.Y/2)
+	local newpos = (CFrame.new(hrt.Position.X,GroundPos,hrt.Position.Z) * CFrame.new(0,-9.5,0)).Position --OLD -11.5
+	BP.Position = newpos]]
+	local HRTSize = hrt.Size
+	BP.Position = hrt.Position - Vector3.new(0,10,0) - Vector3.new(0,HRTSize.Y,0)
+	BG.CFrame = CFrame.new(myhrt.Position,Vector3.new(0,100000,0))
+	BG.Parent = myhrt
+	BP.Parent = myhrt
+	spawn(function()
+		Simulate()
+	end)
+	return monster
+	--[[if not ActivateAbilities() then
+		SwitchWeapon()
+	end]]
+	--ActivateSpecficAbility("R")
+	--Click()
+end
+
+function ChangeDash()
+	for i,v in pairs(getgc(true)) do
+		if type(v) == "table" and rawget(v,"Distance") and rawget(v,"Duration") and rawget(v,"Time") then
+			v.Duration = 50
+			v.Distance = 1
+		end
+	end
+end
+
+function CheckIfItsABuffRoom(stage)
+	if alreadycheck or cooldowncheck then
+		return false
+	end
+	cooldowncheck = true
+	spawn(function()
+		wait(2)
+		cooldowncheck = false
+	end)
+	for i,v in pairs(getgc(true)) do
+		if type(v) == "table" and rawget(v,"UseModel") and rawget(v,"IsActivated") and (v.IsCompleted)~= nil then
+			if not v.IsCompleted and v.NodeIndex == stage  then
+				local model = v.UseModel
+				if model then
+					alreadycheck = true
+					if model.Name:find("Buff") then
+						return true
+					else
+						return false
+					end
+				end
+			end
+		end
+	end
+	return false
+end
+
+function CheckCurrentStage()
+	if GetSettingsValue("SkipLastBoss") then
+		local totalstage =	tonumber(TotalStagesText.Text:match("%d+"))
+		local currentstage = tonumber(CurrentStageText.Text:match("%d+"))
+		if (currentstage == totalstage) or (currentstage == totalstage-1 and CheckIfItsABuffRoom(currentstage)) then
+			LP.Character.Humanoid.Health = 0
+		end
+	end
+end
+function PrioritizeIcons()
+	local list = {}
+	for i,v in pairs(imageiconlist) do
+		list[v.Priority] = v
+	end
+	return list
+end
+function ClearGuidance()
+	local Guidance = Maps:FindFirstChild("Guidance",true)
+	repeat wait()
+		if Guidance then
+			Guidance:Destroy()
+		end
+		Guidance = Maps:FindFirstChild("Guidance",true)
+	until not Guidance
+end
+function FindDoor()
+	local Guidance = Maps:FindFirstChild("Guidance",true)
+	if not Guidance then
+		return
+	end
+	local list = {}
+	local votedoor = Guidance:FindFirstAncestor("VoteDoor")
+	local returnlist 
+	if votedoor then
+		for i,v in pairs(votedoor:GetChildren()) do
+			local icon = v:FindFirstChild("IconImage",true)
+			if icon then
+				table.insert(list,
+					{VoteDoor = votedoor, DoorModel = v, Door = v:FindFirstChildWhichIsA("TouchTransmitter",true).Parent, Image = icon.Image, DoorNumber = v}
+				)
+			end
+		end
+	end
+	for i,v in pairs(PrioritizeIcons()) do
+		for a,b in pairs(list) do
+			if b.Image == v.Image then
+				returnlist = b
+				break
+			end
+		end
+		if returnlist then 
+			break
+		end
+	end
+	if #list > 0 and not returnlist then
+		returnlist= list[1]
+	end
+	return returnlist
+end
+
+function AddAntiTPBackToDeadEnemies()
+	for i,v in pairs(Enemies:GetChildren()) do
+		if v:GetAttribute("SpawnPointName") then
+			v:SetAttribute("IsDead",true)
+		end
+	end
+end
+function DestroyOtherDoors(VoteDoorModel,DoorToSave)
+	for i,v in pairs(VoteDoorModel:GetChildren()) do
+		if v~= DoorToSave then
+			v:Destroy()
+		end
+	end
+end
+
+function NextMapUsingInstance()
+	local votingdoor = FindDoor()
+	if not votingdoor then
+		return
+	end
+	local votedoor = votingdoor.VoteDoor
+	local DoorTouchTransmitterPart = votingdoor.Door
+	local Door = votingdoor.DoorModel
+	DestroyOtherDoors(votedoor,Door)
+	AddAntiTPBackToDeadEnemies()
+	repeat wait()
+		BP.Position = DoorTouchTransmitterPart.Position
+	until not Door:FindFirstChild("Guidance",true)
+end
+
+function NextMapUsingRemote()
+	local votingdoor = FindDoor()
+	if not votingdoor then
+		return
+	end
+	local DoorNumber = votingdoor.DoorNumber
+	local number = DoorNumber.Name
+	if number == "1" then
+		number = "3"
+	elseif number == "3" then
+		number = "1"
+	end
+	if castvote:InvokeServer(tonumber(number)) ~= ErrorCode.SUCCEEDED then
+		local code
+		local numberonealreadychosen = false
+		local numberthreealreadychosen = false
+		repeat wait(0.1)
+			if number == "1" and not numberthreealreadychosen then
+				number = "3"
+				numberonealreadychosen = true
+			elseif number == "2" then
+				number = "1"
+			elseif number == "3" and not numberonealreadychosen then
+				number = "1"
+				numberthreealreadychosen = true
+			end
+			if numberthreealreadychosen and numberonealreadychosen then
+				if number == "1" then
+					number = "2" 
+				elseif number == "2" then
+					number = "3"
+				elseif number == "3" then
+					number = "1"
+				end
+			end
+			code = castvote:InvokeServer(tonumber(number))
+		until code == ErrorCode.SUCCEEDED
+	end
+	--[[
+	repeat wait()
+		firetouchinterest(Door, LP.Character.HumanoidRootPart, true)
+		firetouchinterest(Door, LP.Character.HumanoidRootPart, false)
+	until not DoorNumber:FindFirstChild("Guidance",true)]]
+	ClearGuidance()
+
+end
+--AddAbilitiesToList()
+queue_on_teleport(game:HttpGet("https://raw.githubusercontent.com/HidoPH/test/refs/heads/main/Hunt", true))
+game:GetService("ReplicatedStorage").Dungeon.Remote.DungeonFailed.OnClientEvent:connect(function()
+	finishedmap	= true
+	if GetSettingsValue("AutoFarm") and not disableautojoin then
+		game:GetService("ReplicatedStorage").Dungeon.Remote.RequestReplayDungeon:InvokeServer()
+	end
+end)
+game:GetService("ReplicatedStorage").Dungeon.Remote.DungeonSucceeded.OnClientEvent:connect(function()
+	finishedmap = true
+	if GetSettingsValue("AutoFarm") and not disableautojoin then
+		game:GetService("ReplicatedStorage").Dungeon.Remote.RequestReplayDungeon:InvokeServer()
+	end
+end)
+--[[
+MonsterRemainingCountChanged.OnClientEvent:connect(function(id,remaining)
+	monsterremaining = remaining
+end)]]
+AddHowManyWeapons()
+GetSkills()
+if weapons > 1 then
+	lasttime = tick()
+else
+	lasttime = lasttime+ 100000000000
+end
+game:GetService("StarterGui"):SetCore("SendNotification",{
+	Title = "DH V "..version,
+	Text = "Autofarm Loaded"
+})
+function CheckFPS()
+	if GetSettingsValue("FPSCap") then
+		if workspace:GetRealPhysicsFPS() > GetSettingsValue("FPSValue")+1 then
+			setfpscap(GetSettingsValue("FPSValue"))
+		end
+	end
+end
+function CheckForSafePads()
+	if ignoresafepads then
+		return
+	end
+	local safepart = workspace.Obstacle:FindFirstChild("SafePart",true)
+	if safepart and safepart.Transparency ~= 1 then
+		return safepart
+	end
+end
+function WaitUsingConfig(abilityid)
+	local parameter = GameplayEffectConfig[abilityid].Parameter
+	local waittime = parameter.Time or 0
+	if GetSettingsValue("UseCustomWaitTime") and GetSettingsValue("CustomWaitTime")  then
+		if abilityid~="234"then
+			local customwaittime = GetSettingsValue("CustomWaitTime")*1000
+			if waittime > customwaittime then
+				waittime = customwaittime
+			end 
+		else
+			task.wait(1.330)
+			return
+		end
+	end
+	task.wait(waittime/1000)
+end
+if _G.manualexecute then
+	ChangeSettings("AutoFarm",false)
+end
+function RunRepeat()
+	if runningrepeat then
+		return
+	end
+	runningrepeat = true
+	repeat wait()
+		if GetSettingsValue("AutoFarm") then
+			CheckFPS()
+			CheckCurrentStage()
+			enemy = FindEnemiesV2()
+			if donttp then
+				donttp = false
+			else
+				NextMapUsingInstance()
+			end
+		end
+		if buffsuse or GetSettingsValue("AutoFarm") then
+			UseBuffs()
+			--AutoUseSickleEffect()
+		end
+		spawn(function()
+			Simulate()
+		end)
+	until finishedmap or (not autoskills and not autoattack and not GetSettingsValue("AutoFarm") and not buffsuse)
+	runningrepeat = false
+end
+function RemoveWalls()
+	for i,v in pairs(Maps:GetChildren()) do
+		local layout = v:FindFirstChild("Layout",true)
+		local ground = v:FindFirstChild("Ground",true)
+		if layout then
+			layout:Destroy()
+		end
+		if ground then
+			ground:Destroy()
+		end
+	end
+	for i,v in pairs(Maps:GetDescendants()) do
+		if v:IsA("BasePart") then
+			v.CanCollide = false
+		end
+	end
+	Maps.DescendantAdded:connect(function(v)
+		if v:IsA("BasePart") then
+			v.CanCollide = false
+		end
+	end)
+end
+function RunAutoFarm()
+	if GetSettingsValue("AutoFarm") then
+		ChangeDash()
+		if T:FindFirstChild("BodyVelocity") then
+			T:FindFirstChild("BodyVelocity"):Destroy()
+		end
+		if T:FindFirstChild("BodyGyro") then
+			T:FindFirstChild("BodyGyro"):Destroy()
+		end
+		LP.Character.Humanoid.PlatformStand = true
+		RemoveWalls()
+		RunRepeat()
+	end
+end
+--GetGameplayAbilitySpecContainer()
+HasSickle()
+GetBuffs()
+RefreshVotingLabels()
+RefreshSettings()
+RunAutoFarm()
